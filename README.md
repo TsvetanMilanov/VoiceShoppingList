@@ -1,4 +1,4 @@
-# ListeningShoppingPal
+# VoiceShoppingList
 Android app for quick shopping list creation
 
 ## Business problem
