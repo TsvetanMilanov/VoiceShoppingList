@@ -2,6 +2,7 @@
   <dictionary name="Ceco">
     <words>
       <w>levenshtein</w>
+      <w>telerik</w>
     </words>
   </dictionary>
 </component>
