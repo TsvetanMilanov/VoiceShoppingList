@@ -16,8 +16,8 @@ import java.util.ArrayList;
 public class SpeechListener implements RecognitionListener {
     private static final String TAG = SpeechListener.class.getSimpleName();
     private Activity activity;
-    private final Intent intent;
-    private final SpeechRecognizer speechRecognizer;
+    private Intent intent;
+    private SpeechRecognizer speechRecognizer;
 
     public SpeechListener(Activity activity, SpeechRecognizer speechRecognizer, Intent intent) {
         this.activity = activity;
@@ -42,24 +42,27 @@ public class SpeechListener implements RecognitionListener {
 
     @Override
     public void onBufferReceived(byte[] buffer) {
-        Log.d(TAG, "Buffer received!");
+        Log.e(TAG, "Buffer received!");
     }
 
     @Override
     public void onEndOfSpeech() {
-        this.speechRecognizer.startListening(this.intent);
+        Log.e(TAG, "onEndOfSpeech()");
+        this.restartSpeechListener();
     }
 
     @Override
     public void onError(int error) {
-        Log.e(TAG, "Error!");
-        Log.e(TAG, "" + error);
+        Log.e(TAG, "Error! " + error);
 
-        this.speechRecognizer.startListening(this.intent);
+        if (error != SpeechRecognizer.ERROR_RECOGNIZER_BUSY) {
+            this.restartSpeechListener();
+        }
     }
 
     @Override
     public void onResults(Bundle results) {
+        Log.d(TAG, "onResults()");
         if (results != null) {
             ArrayList<String> data = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
 
@@ -69,14 +72,24 @@ public class SpeechListener implements RecognitionListener {
             }
         }
 
-        this.speechRecognizer.startListening(this.intent);
+        this.restartSpeechListener();
     }
 
     @Override
     public void onPartialResults(Bundle partialResults) {
+        Log.d(TAG, "onPartialResults()");
     }
 
     @Override
     public void onEvent(int eventType, Bundle params) {
+        Log.d(TAG, "onEvent()");
+    }
+
+    private void restartSpeechListener() {
+        this.speechRecognizer.destroy();
+
+        this.intent = SpeechRecognizerFactory.createSpeechRecognitionIntent(this.activity);
+        this.speechRecognizer = SpeechRecognizerFactory.createSpeechRecognizer(this.activity, this.intent);
+        this.speechRecognizer.startListening(this.intent);
     }
 }
