@@ -2,11 +2,13 @@ package com.telerik.academy.voiceshoppinglist;
 
 import android.app.ActionBar;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.view.ContextThemeWrapper;
 import android.text.Layout;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewManager;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -57,5 +59,17 @@ public class AddNewShoppingListActivity extends AppCompatActivity {
 
     public void onDeleteBtnClick(View view) {
         ((ViewManager)view.getParent().getParent()).removeView((View)view.getParent());
+    }
+
+    public void onCheckBoxClick(View view) {
+        CheckBox clickedBox = (CheckBox)view;
+        ViewGroup parent = (ViewGroup)view.getParent();
+        EditText text = (EditText)parent.getChildAt(1);
+
+        if (clickedBox.isChecked()) {
+            text.setPaintFlags(text.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        } else {
+            text.setPaintFlags(text.getPaintFlags() & ~(Paint.STRIKE_THRU_TEXT_FLAG));
+        }
     }
 }
