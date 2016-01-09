@@ -2,7 +2,9 @@ package com.telerik.academy.voiceshoppinglist.utilities.speech;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.speech.SpeechRecognizer;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.telerik.academy.voiceshoppinglist.R;
@@ -40,5 +42,19 @@ public class MenuSpeechListener extends BaseSpeechListener {
                 return;
             }
         }
+    }
+
+    @Override
+    public void onReadyForSpeech(Bundle params) {
+        TextView commandResultTextView = (TextView) this.activity.findViewById(R.id.tv_command_result);
+        commandResultTextView.setText(R.string.waiting_for_command_label);
+        super.onReadyForSpeech(params);
+    }
+
+    @Override
+    public void onEndOfSpeech() {
+        TextView commandResultTextView = (TextView) this.activity.findViewById(R.id.tv_command_result);
+        commandResultTextView.setText(R.string.please_wait_label);
+        super.onEndOfSpeech();
     }
 }

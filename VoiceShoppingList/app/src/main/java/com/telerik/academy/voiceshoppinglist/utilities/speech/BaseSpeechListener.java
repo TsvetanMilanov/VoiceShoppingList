@@ -84,8 +84,6 @@ public abstract class BaseSpeechListener implements RecognitionListener {
         this.restartSpeechListener();
     }
 
-    protected abstract void handleResults(ArrayList<String> data);
-
     @Override
     public void onPartialResults(Bundle partialResults) {
         Log.d(tag, "onPartialResults()");
@@ -115,4 +113,6 @@ public abstract class BaseSpeechListener implements RecognitionListener {
 
         this.isSpeechRecognizerAvailable = false;
     }
+
+    protected abstract void handleResults(ArrayList<String> data);
 }
