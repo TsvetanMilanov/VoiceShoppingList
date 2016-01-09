@@ -26,9 +26,9 @@ public final class SpeechRecognizerFactory {
      * @param intent   The intent which starts the speech recognizer.
      * @return Returns new speech recognizer created with custom intent.
      */
-    public static SpeechRecognizer createSpeechRecognizer(Activity activity, Intent intent) {
+    public static SpeechRecognizer createMenuSpeechRecognizer(Activity activity, Intent intent) {
         speechRecognizer = SpeechRecognizer.createSpeechRecognizer(activity);
-        SpeechListener listener = new SpeechListener(activity, speechRecognizer, intent);
+        MenuSpeechListener listener = new MenuSpeechListener(activity, speechRecognizer, intent);
 
         speechRecognizer.setRecognitionListener(listener);
 

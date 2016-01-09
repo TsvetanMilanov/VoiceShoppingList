@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="60dp"
-        android:text="@string/waiting_for_command_label"
+        android:text="@string/please_wait_label"
         android:textSize="20sp" />
 
     <fragment

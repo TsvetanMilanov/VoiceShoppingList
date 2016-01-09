@@ -55,7 +55,7 @@ public final class StringsSimilarityCalculator {
      * @param suggestionString The suggestion string.
      * @return Returns the similarity coefficient in range 0 - 100.
      */
-    public  static  double CalculateSimilarityCoefficient(String originalString, String suggestionString) {
+    public  static  double calculateSimilarityCoefficient(String originalString, String suggestionString) {
         int distance = CalculateEditDistance(originalString, suggestionString);
 
         double similarityCoefficient = 1 - (Double.parseDouble(distance + "") / (originalString.length()));

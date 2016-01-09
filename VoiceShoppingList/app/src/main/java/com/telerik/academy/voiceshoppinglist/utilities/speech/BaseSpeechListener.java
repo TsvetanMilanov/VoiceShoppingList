@@ -6,36 +6,34 @@ import android.os.Bundle;
 import android.speech.RecognitionListener;
 import android.speech.SpeechRecognizer;
 import android.util.Log;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import com.telerik.academy.voiceshoppinglist.R;
 
 import java.util.ArrayList;
 
-public class SpeechListener implements RecognitionListener {
-    private static final String TAG = SpeechListener.class.getSimpleName();
-    private boolean isSpeechRecognizerAvailable;
-    private Activity activity;
-    private Intent intent;
-    private SpeechRecognizer speechRecognizer;
+public abstract class BaseSpeechListener implements RecognitionListener {
+    protected String tag = null;
+    protected final Activity activity;
+    protected Intent intent;
+    protected SpeechRecognizer speechRecognizer;
+    protected boolean isSpeechRecognizerAvailable;
 
-    public SpeechListener(Activity activity, SpeechRecognizer speechRecognizer, Intent intent) {
+    public BaseSpeechListener(Activity activity, SpeechRecognizer speechRecognizer, Intent intent) {
         this.activity = activity;
         this.intent = intent;
         this.speechRecognizer = speechRecognizer;
         this.isSpeechRecognizerAvailable = false;
+        this.tag = BaseSpeechListener.class.getSimpleName();
     }
 
     @Override
     public void onReadyForSpeech(Bundle params) {
-        Log.d(TAG, "Ready for speech!");
+        Log.d(tag, "Ready for speech!");
         Toast.makeText(this.activity, "Speak now!!!", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onBeginningOfSpeech() {
-        Log.d(TAG, "Beginning of speech!");
+        Log.d(tag, "Beginning of speech!");
     }
 
     @Override
@@ -44,18 +42,18 @@ public class SpeechListener implements RecognitionListener {
 
     @Override
     public void onBufferReceived(byte[] buffer) {
-        Log.e(TAG, "Buffer received!");
+        Log.e(tag, "Buffer received!");
     }
 
     @Override
     public void onEndOfSpeech() {
-        Log.e(TAG, "onEndOfSpeech()");
+        Log.e(tag, "onEndOfSpeech()");
         this.restartSpeechListener();
     }
 
     @Override
     public void onError(int error) {
-        Log.e(TAG, "Error! " + error);
+        Log.e(tag, "Error! " + error);
 
         // TODO: Finish the error handling.
 
@@ -72,13 +70,12 @@ public class SpeechListener implements RecognitionListener {
 
     @Override
     public void onResults(Bundle results) {
-        Log.d(TAG, "onResults()");
+        Log.d(tag, "onResults()");
         if (results != null) {
             ArrayList<String> data = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
 
             if (data != null) {
-                TextView tvCommandResult = (TextView) this.activity.findViewById(R.id.tv_command_result);
-                tvCommandResult.setText(data.get(0));
+                this.handleResults(data);
             }
         }
 
@@ -89,27 +86,33 @@ public class SpeechListener implements RecognitionListener {
 
     @Override
     public void onPartialResults(Bundle partialResults) {
-        Log.d(TAG, "onPartialResults()");
+        Log.d(tag, "onPartialResults()");
     }
 
     @Override
     public void onEvent(int eventType, Bundle params) {
-        Log.d(TAG, "onEvent()");
+        Log.d(tag, "onEvent()");
     }
 
-
-
-    private void restartSpeechListener() {
+    protected void restartSpeechListener() {
         if (!this.isSpeechRecognizerAvailable) {
+            return;
+        }
+
+        // This check is needed because in child speech listener when need to stop listening
+        // the destroy() method doesn't work.
+        if (this.speechRecognizer == null) {
             return;
         }
 
         this.speechRecognizer.destroy();
 
         this.intent = SpeechRecognizerFactory.createSpeechRecognitionIntent(this.activity);
-        this.speechRecognizer = SpeechRecognizerFactory.createSpeechRecognizer(this.activity, this.intent);
+        this.speechRecognizer = SpeechRecognizerFactory.createMenuSpeechRecognizer(this.activity, this.intent);
         this.speechRecognizer.startListening(this.intent);
 
         this.isSpeechRecognizerAvailable = false;
     }
+
+    protected abstract void handleResults(ArrayList<String> data);
 }

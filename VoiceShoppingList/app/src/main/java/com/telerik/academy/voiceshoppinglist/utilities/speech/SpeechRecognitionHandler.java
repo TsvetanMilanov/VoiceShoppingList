@@ -7,7 +7,7 @@ import android.speech.SpeechRecognizer;
 public final class SpeechRecognitionHandler {
     public static void startListening(Activity activity) {
         Intent intent = SpeechRecognizerFactory.createSpeechRecognitionIntent(activity);
-        SpeechRecognizer speechRecognizer = SpeechRecognizerFactory.createSpeechRecognizer(activity, intent);
+        SpeechRecognizer speechRecognizer = SpeechRecognizerFactory.createMenuSpeechRecognizer(activity, intent);
 
         speechRecognizer.startListening(intent);
     }
