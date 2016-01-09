@@ -1,4 +1,4 @@
-package com.telerik.academy.voiceshoppinglist.utilities;
+package com.telerik.academy.voiceshoppinglist.utilities.speech;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -56,6 +56,9 @@ public class SpeechListener implements RecognitionListener {
     @Override
     public void onError(int error) {
         Log.e(TAG, "Error! " + error);
+
+        // TODO: Finish the error handling.
+
         if (error != SpeechRecognizer.ERROR_RECOGNIZER_BUSY) {
             if (error == SpeechRecognizer.ERROR_SPEECH_TIMEOUT ||
                     error == SpeechRecognizer.ERROR_NO_MATCH ||
@@ -93,6 +96,8 @@ public class SpeechListener implements RecognitionListener {
     public void onEvent(int eventType, Bundle params) {
         Log.d(TAG, "onEvent()");
     }
+
+
 
     private void restartSpeechListener() {
         if (!this.isSpeechRecognizerAvailable) {

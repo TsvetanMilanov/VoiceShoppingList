@@ -9,10 +9,38 @@
     tools:activity="com.telerik.academy.voiceshoppinglist.MainActivityFragment"
     tools:showIn="@layout/activity_main">
 
-    <TextView
-        android:id="@+id/tv_command_result"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_marginTop="50dp"
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btn_add_new_shopping_list"
+            style="@style/MainMenuButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_new_shopping_list_label" />
+        <Button
+            android:id="@+id/btn_my_shopping_lists"
+            style="@style/MainMenuButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/my_shopping_lists_label" />
+        <Button
+            android:id="@+id/btn_stop_listening"
+            style="@style/MainMenuButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/stop_listening_label" />
+        <Button
+            android:id="@+id/btn_exit"
+            style="@style/MainMenuButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/exit" />
+
+    </LinearLayout>
 
 </RelativeLayout>
