@@ -36,8 +36,11 @@ public class AddNewShoppingListActivity extends AppCompatActivity {
 
     public void onAddBtnClick(View view) {
         LinearLayout newItemRow = (LinearLayout)getLayoutInflater().inflate(R.layout.item_row_template, null);
-
+        EditText textInput = (EditText)newItemRow.getChildAt(1);
+        String productName = ((EditText)findViewById(R.id.newProductNameInput)).getText().toString();
+        textInput.setText(productName);
         productsList.addView(newItemRow);
+        ((EditText)findViewById(R.id.newProductNameInput)).setText("");
 
         mainScrollView.postDelayed(new Runnable() {
             @Override
