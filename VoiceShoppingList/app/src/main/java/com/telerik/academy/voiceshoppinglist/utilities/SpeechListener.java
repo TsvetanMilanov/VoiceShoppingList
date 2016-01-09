@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 public class SpeechListener implements RecognitionListener {
     private static final String TAG = SpeechListener.class.getSimpleName();
+    private boolean isSpeechRecognizerAvailable;
     private Activity activity;
     private Intent intent;
     private SpeechRecognizer speechRecognizer;
@@ -23,6 +24,7 @@ public class SpeechListener implements RecognitionListener {
         this.activity = activity;
         this.intent = intent;
         this.speechRecognizer = speechRecognizer;
+        this.isSpeechRecognizerAvailable = false;
     }
 
     @Override
@@ -54,8 +56,13 @@ public class SpeechListener implements RecognitionListener {
     @Override
     public void onError(int error) {
         Log.e(TAG, "Error! " + error);
-
         if (error != SpeechRecognizer.ERROR_RECOGNIZER_BUSY) {
+            if (error == SpeechRecognizer.ERROR_SPEECH_TIMEOUT ||
+                    error == SpeechRecognizer.ERROR_NO_MATCH ||
+                    error == SpeechRecognizer.ERROR_NETWORK_TIMEOUT) {
+                this.isSpeechRecognizerAvailable = true;
+            }
+
             this.restartSpeechListener();
         }
     }
@@ -72,6 +79,8 @@ public class SpeechListener implements RecognitionListener {
             }
         }
 
+        this.isSpeechRecognizerAvailable = true;
+
         this.restartSpeechListener();
     }
 
@@ -86,10 +95,16 @@ public class SpeechListener implements RecognitionListener {
     }
 
     private void restartSpeechListener() {
+        if (!this.isSpeechRecognizerAvailable) {
+            return;
+        }
+
         this.speechRecognizer.destroy();
 
         this.intent = SpeechRecognizerFactory.createSpeechRecognitionIntent(this.activity);
         this.speechRecognizer = SpeechRecognizerFactory.createSpeechRecognizer(this.activity, this.intent);
         this.speechRecognizer.startListening(this.intent);
+
+        this.isSpeechRecognizerAvailable = false;
     }
 }
