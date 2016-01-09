@@ -10,6 +10,7 @@ public final class Commands {
         Intent intent = new Intent(activity, AddNewShoppingListActivity.class);
 
         activity.startActivity(intent);
+        activity.finish();
     }
 
     public static void exitApplication(Activity activity) {
