@@ -1,13 +1,24 @@
 package com.telerik.academy.voiceshoppinglist;
 
+import android.app.ActionBar;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.view.ContextThemeWrapper;
+import android.text.Layout;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewManager;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
+
+import java.math.MathContext;
 
 public class AddNewShoppingListActivity extends AppCompatActivity {
 
@@ -24,8 +35,9 @@ public class AddNewShoppingListActivity extends AppCompatActivity {
     }
 
     public void onAddBtnClick(View view) {
-        EditText newItem = new EditText(this);
-        productsList.addView(newItem);
+        LinearLayout newItemRow = (LinearLayout)getLayoutInflater().inflate(R.layout.item_row_template, null);
+
+        productsList.addView(newItemRow);
 
         mainScrollView.postDelayed(new Runnable() {
             @Override
@@ -43,5 +55,21 @@ public class AddNewShoppingListActivity extends AppCompatActivity {
 
         startActivity(intent);
         super.onBackPressed();
+    }
+
+    public void onDeleteBtnClick(View view) {
+        ((ViewManager)view.getParent().getParent()).removeView((View)view.getParent());
+    }
+
+    public void onCheckBoxClick(View view) {
+        CheckBox clickedBox = (CheckBox)view;
+        ViewGroup parent = (ViewGroup)view.getParent();
+        EditText text = (EditText)parent.getChildAt(1);
+
+        if (clickedBox.isChecked()) {
+            text.setPaintFlags(text.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        } else {
+            text.setPaintFlags(text.getPaintFlags() & ~(Paint.STRIKE_THRU_TEXT_FLAG));
+        }
     }
 }
