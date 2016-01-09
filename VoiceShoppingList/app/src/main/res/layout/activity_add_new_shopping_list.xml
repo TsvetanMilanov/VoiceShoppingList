@@ -35,5 +35,6 @@
             android:layout_gravity="right"
             android:onClick="onAddBtnClick"
             android:src="@android:drawable/ic_input_add" />
+
     </LinearLayout>
 </ScrollView>

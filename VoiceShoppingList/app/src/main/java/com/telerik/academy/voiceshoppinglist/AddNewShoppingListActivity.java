@@ -1,13 +1,21 @@
 package com.telerik.academy.voiceshoppinglist;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.view.ContextThemeWrapper;
+import android.text.Layout;
 import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
+
+import java.math.MathContext;
 
 public class AddNewShoppingListActivity extends AppCompatActivity {
 
@@ -24,8 +32,9 @@ public class AddNewShoppingListActivity extends AppCompatActivity {
     }
 
     public void onAddBtnClick(View view) {
-        EditText newItem = new EditText(this);
-        productsList.addView(newItem);
+        LinearLayout newItemRow = (LinearLayout)getLayoutInflater().inflate(R.layout.item_row_template, null);
+
+        productsList.addView(newItemRow);
 
         mainScrollView.postDelayed(new Runnable() {
             @Override
