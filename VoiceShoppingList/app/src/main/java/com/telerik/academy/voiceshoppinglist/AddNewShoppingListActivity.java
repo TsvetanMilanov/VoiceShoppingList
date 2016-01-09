@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.view.ContextThemeWrapper;
 import android.text.Layout;
 import android.view.View;
+import android.view.ViewManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -52,5 +53,9 @@ public class AddNewShoppingListActivity extends AppCompatActivity {
 
         startActivity(intent);
         super.onBackPressed();
+    }
+
+    public void onDeleteBtnClick(View view) {
+        ((ViewManager)view.getParent().getParent()).removeView((View)view.getParent());
     }
 }

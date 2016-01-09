@@ -16,5 +16,6 @@
         android:layout_width="50dp"
         android:layout_height="match_parent"
         android:layout_margin="5dp"
-        style="@style/DeleteItemBtn"/>
+        style="@style/DeleteItemBtn"
+        android:onClick="onDeleteBtnClick"/>
 </LinearLayout>
