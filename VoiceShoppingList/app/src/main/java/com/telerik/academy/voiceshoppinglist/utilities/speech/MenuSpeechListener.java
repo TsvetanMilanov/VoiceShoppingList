@@ -15,14 +15,14 @@ import com.telerik.academy.voiceshoppinglist.utilities.StringsSimilarityCalculat
 import java.util.ArrayList;
 
 public class MenuSpeechListener extends BaseSpeechListener {
-    public MenuSpeechListener(Activity activity, SpeechRecognizer speechRecognizer, Intent intent, Class intentClass) {
-        super(activity, speechRecognizer, intent, intentClass);
+    public MenuSpeechListener(Activity activity, SpeechRecognizer speechRecognizer, Intent intent, Class intentClass, int resultTextViewId) {
+        super(activity, speechRecognizer, intent, intentClass, resultTextViewId);
         this.tag = MenuSpeechListener.class.getSimpleName();
     }
 
     @Override
     protected boolean handleResults(ArrayList<String> data) {
-        TextView tvCommandResult = (TextView) this.activity.findViewById(R.id.tv_command_result);
+        TextView tvCommandResult = (TextView) this.activity.findViewById(this.resultTextViewId);
 
         for (String commandString : data) {
             if (StringsSimilarityCalculator.calculateSimilarityCoefficient(Constants.ADD_SHOPPING_LIST_COMMAND, commandString) >=
@@ -57,22 +57,7 @@ public class MenuSpeechListener extends BaseSpeechListener {
     @Override
     public void onReadyForSpeech(Bundle params) {
         Toast.makeText(this.activity, "Speak now!!!", Toast.LENGTH_SHORT).show();
-        TextView commandResultTextView = (TextView) this.activity.findViewById(R.id.tv_command_result);
-
-        if (commandResultTextView != null) {
-            commandResultTextView.setText(R.string.waiting_for_command_label);
-        }
 
         super.onReadyForSpeech(params);
-    }
-
-    @Override
-    public void onEndOfSpeech() {
-        TextView commandResultTextView = (TextView) this.activity.findViewById(R.id.tv_command_result);
-        if (commandResultTextView != null) {
-            commandResultTextView.setText(R.string.please_wait_label);
-        }
-
-        super.onEndOfSpeech();
     }
 }

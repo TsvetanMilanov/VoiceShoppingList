@@ -6,6 +6,7 @@ import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 
 import com.telerik.academy.voiceshoppinglist.MainActivityFragment;
+import com.telerik.academy.voiceshoppinglist.R;
 
 public final class SpeechRecognizerFactory {
     private static SpeechRecognizer speechRecognizer;
@@ -28,7 +29,7 @@ public final class SpeechRecognizerFactory {
      */
     public static SpeechRecognizer createMenuSpeechRecognizer(Activity activity, Intent intent, Class intentClass) {
         speechRecognizer = SpeechRecognizer.createSpeechRecognizer(activity);
-        MenuSpeechListener listener = new MenuSpeechListener(activity, speechRecognizer, intent, intentClass);
+        MenuSpeechListener listener = new MenuSpeechListener(activity, speechRecognizer, intent, intentClass, R.id.tv_command_result);
 
         speechRecognizer.setRecognitionListener(listener);
 
@@ -44,7 +45,7 @@ public final class SpeechRecognizerFactory {
      */
     public static SpeechRecognizer createShoppingListSpeechRecognizer(Activity activity, Intent intent, Class intentClass) {
         speechRecognizer = SpeechRecognizer.createSpeechRecognizer(activity);
-        ShoppingListSpeechListener listener = new ShoppingListSpeechListener(activity, speechRecognizer, intent, intentClass);
+        ShoppingListSpeechListener listener = new ShoppingListSpeechListener(activity, speechRecognizer, intent, intentClass, R.id.tv_shopping_list_commands_result);
 
         speechRecognizer.setRecognitionListener(listener);
 

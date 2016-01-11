@@ -22,15 +22,14 @@ import java.util.ArrayList;
 
 public class ShoppingListSpeechListener extends BaseSpeechListener {
 
-    public ShoppingListSpeechListener(Activity activity, SpeechRecognizer speechRecognizer, Intent intent, Class intentClass) {
-        super(activity, speechRecognizer, intent, intentClass);
+    public ShoppingListSpeechListener(Activity activity, SpeechRecognizer speechRecognizer, Intent intent, Class intentClass, int resultTextViewId) {
+        super(activity, speechRecognizer, intent, intentClass, resultTextViewId);
         this.tag = ShoppingListSpeechListener.class.getSimpleName();
     }
 
     @Override
     protected boolean handleResults(ArrayList<String> data) {
         Log.d(this.tag, "Shopping List Speech Listener handle results.");
-        TextView tvCommandResult = (TextView) this.activity.findViewById(R.id.tv_shopping_list_commands_result);
 
         for (String commandString : data) {
             EditText productNameContainer = (EditText) this.activity.findViewById(R.id.newProductNameInput);
@@ -87,20 +86,6 @@ public class ShoppingListSpeechListener extends BaseSpeechListener {
         }
 
         return true;
-    }
-
-    @Override
-    public void onReadyForSpeech(Bundle params) {
-        TextView commandResultTextView = (TextView) this.activity.findViewById(R.id.tv_shopping_list_commands_result);
-        commandResultTextView.setText(R.string.waiting_for_command_label);
-        super.onReadyForSpeech(params);
-    }
-
-    @Override
-    public void onEndOfSpeech() {
-        TextView commandResultTextView = (TextView) this.activity.findViewById(R.id.tv_shopping_list_commands_result);
-        commandResultTextView.setText(R.string.please_wait_label);
-        super.onEndOfSpeech();
     }
 
     @Override

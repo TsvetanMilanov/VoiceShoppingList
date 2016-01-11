@@ -6,7 +6,10 @@ import android.os.Bundle;
 import android.speech.RecognitionListener;
 import android.speech.SpeechRecognizer;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.telerik.academy.voiceshoppinglist.R;
 
 import java.util.ArrayList;
 
@@ -17,19 +20,27 @@ public abstract class BaseSpeechListener implements RecognitionListener {
     protected SpeechRecognizer speechRecognizer;
     protected boolean isSpeechRecognizerAvailable;
     protected Class intentClass;
+    protected int resultTextViewId;
 
-    public BaseSpeechListener(Activity activity, SpeechRecognizer speechRecognizer, Intent intent, Class intentClass) {
+    public BaseSpeechListener(Activity activity, SpeechRecognizer speechRecognizer, Intent intent, Class intentClass, int resultTextViewId) {
         this.activity = activity;
         this.intent = intent;
         this.speechRecognizer = speechRecognizer;
         this.isSpeechRecognizerAvailable = false;
         this.tag = BaseSpeechListener.class.getSimpleName();
         this.intentClass = intentClass;
+        this.resultTextViewId = resultTextViewId;
     }
 
     @Override
     public void onReadyForSpeech(Bundle params) {
         Log.d(tag, "Ready for speech!");
+
+        TextView commandResultTextView = (TextView) this.activity.findViewById(this.resultTextViewId);
+
+        if (commandResultTextView != null) {
+            commandResultTextView.setText(R.string.waiting_for_command_label);
+        }
     }
 
     @Override
@@ -49,6 +60,10 @@ public abstract class BaseSpeechListener implements RecognitionListener {
     @Override
     public void onEndOfSpeech() {
         Log.e(tag, "onEndOfSpeech()");
+
+        TextView commandResultTextView = (TextView) this.activity.findViewById(this.resultTextViewId);
+        commandResultTextView.setText(R.string.please_wait_label);
+
         this.restartSpeechListener();
     }
 
@@ -57,6 +72,12 @@ public abstract class BaseSpeechListener implements RecognitionListener {
         Log.e(tag, "Error! " + error);
 
         // TODO: Finish the error handling.
+
+        TextView commandResultTextView = (TextView) this.activity.findViewById(this.resultTextViewId);
+
+        if (commandResultTextView != null) {
+            commandResultTextView.setText(R.string.please_wait_label);
+        }
 
         if (error != SpeechRecognizer.ERROR_RECOGNIZER_BUSY) {
             if (error == SpeechRecognizer.ERROR_SPEECH_TIMEOUT ||
