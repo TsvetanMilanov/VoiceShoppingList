@@ -23,6 +23,8 @@ import android.widget.ScrollView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.telerik.academy.voiceshoppinglist.utilities.OnSwipeTouchListener;
+
 import java.math.MathContext;
 
 public class AddNewShoppingListActivity extends AppCompatActivity {
@@ -53,6 +55,12 @@ public class AddNewShoppingListActivity extends AppCompatActivity {
 
         View dragIcon = row.getChildAt(0);
         dragIcon.setOnTouchListener(new RowContentTouchListener());
+        textInput.setOnTouchListener(new OnSwipeTouchListener(this) {
+            @Override
+            public void onSwipeLeft(View v) {
+                onDeleteBtnClick(v);
+            }
+        });
         row.setOnDragListener(new RowContentDragListener());
 
         productsList.addView(row);
