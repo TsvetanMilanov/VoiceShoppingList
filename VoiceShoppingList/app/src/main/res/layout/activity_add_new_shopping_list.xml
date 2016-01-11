@@ -32,15 +32,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Enter product name"/>
+                android:hint="Add item" />
 
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/addItem"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:onClick="onAddBtnClick"
-                android:src="@android:drawable/ic_input_add" />
+            <!--<android.support.design.widget.FloatingActionButton-->
+                <!--android:id="@+id/addItem"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="right"-->
+                <!--android:onClick="onAddBtnClick"-->
+                <!--android:src="@android:drawable/ic_input_add" />-->
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

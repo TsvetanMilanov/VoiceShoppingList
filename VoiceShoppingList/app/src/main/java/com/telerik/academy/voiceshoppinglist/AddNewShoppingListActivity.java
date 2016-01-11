@@ -10,16 +10,19 @@ import android.os.Bundle;
 import android.support.v7.view.ContextThemeWrapper;
 import android.text.Layout;
 import android.view.DragEvent;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewManager;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -41,6 +44,19 @@ public class AddNewShoppingListActivity extends AppCompatActivity {
         productsList = (LinearLayout) findViewById(R.id.productsList);
         mainScrollView = (ScrollView) findViewById(R.id.mainScrollView);
         productNameInput = (EditText)findViewById(R.id.newProductNameInput);
+
+        productNameInput.setOnKeyListener(new View.OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                // If the event is a key-down event on the "enter" button
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                        (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    // Perform action on key press
+                    onAddBtnClick(productNameInput);
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
     public void onAddBtnClick(View view) {
