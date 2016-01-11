@@ -46,7 +46,7 @@ public class AddNewShoppingListActivity extends AppCompatActivity {
 
         EditText textInput = (EditText)row.getChildAt(2);
 
-        String productName = productNameInput.getText().toString();
+        final String productName = productNameInput.getText().toString();
         productNameInput.setText("");
 
         textInput.setText(productName);
@@ -61,6 +61,7 @@ public class AddNewShoppingListActivity extends AppCompatActivity {
             @Override
             public void run() {
                 mainScrollView.fullScroll(ScrollView.FOCUS_DOWN);
+                productNameInput.requestFocus();
             }
         }, 200);
 
