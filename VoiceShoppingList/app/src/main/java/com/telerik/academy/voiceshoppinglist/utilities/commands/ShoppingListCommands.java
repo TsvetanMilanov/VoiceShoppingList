@@ -68,8 +68,8 @@ public final class ShoppingListCommands {
         nameContainer.setText(productName);
     }
 
-    public static boolean checkProduct(String commandParameter, LinearLayout productsList) {
-        CheckBox checkBox = findProductsCheckboxByTag(commandParameter, Constants.CHECKBOX_TAG, productsList);
+    public static boolean checkProduct(Activity activity, LinearLayout productsList, String commandParameter) {
+        CheckBox checkBox = findProductsCheckboxByTag(activity, productsList, commandParameter);
 
         if (checkBox == null) {
             return false;
@@ -82,8 +82,8 @@ public final class ShoppingListCommands {
         return true;
     }
 
-    public static boolean uncheckProduct(String commandParameter, LinearLayout productsList) {
-        CheckBox checkBox = findProductsCheckboxByTag(commandParameter, Constants.CHECKBOX_TAG, productsList);
+    public static boolean uncheckProduct(Activity activity, LinearLayout productsList, String commandParameter) {
+        CheckBox checkBox = findProductsCheckboxByTag(activity, productsList, commandParameter);
 
         if (checkBox == null) {
             return false;
@@ -100,14 +100,14 @@ public final class ShoppingListCommands {
         ((ViewManager) view.getParent().getParent()).removeView((View) view.getParent());
     }
 
-    private static CheckBox findProductsCheckboxByTag(String commandParameter, String tag, LinearLayout productsList) {
+    private static CheckBox findProductsCheckboxByTag(Activity activity, LinearLayout productsList, String commandParameter) {
         View currentProductContainer = findViewByNumberInParent(commandParameter, productsList);
 
         if (currentProductContainer == null) {
             return null;
         }
 
-        CheckBox checkBox = (CheckBox) currentProductContainer.findViewWithTag(tag);
+        CheckBox checkBox = (CheckBox) currentProductContainer.findViewWithTag(activity.getResources().getString(R.string.product_checkbox_tag));
 
         return checkBox;
     }
