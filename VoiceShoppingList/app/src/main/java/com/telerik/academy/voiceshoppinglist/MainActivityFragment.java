@@ -22,7 +22,7 @@ public class MainActivityFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         final Activity activity = this.getActivity();
 
-        SpeechRecognitionHandler.startListening(activity);
+        SpeechRecognitionHandler.startListeningForMenuCommands(activity, MainActivityFragment.class);
 
         return view;
     }

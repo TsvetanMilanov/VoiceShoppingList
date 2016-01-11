@@ -16,19 +16,20 @@ public abstract class BaseSpeechListener implements RecognitionListener {
     protected Intent intent;
     protected SpeechRecognizer speechRecognizer;
     protected boolean isSpeechRecognizerAvailable;
+    protected Class intentClass;
 
-    public BaseSpeechListener(Activity activity, SpeechRecognizer speechRecognizer, Intent intent) {
+    public BaseSpeechListener(Activity activity, SpeechRecognizer speechRecognizer, Intent intent, Class intentClass) {
         this.activity = activity;
         this.intent = intent;
         this.speechRecognizer = speechRecognizer;
         this.isSpeechRecognizerAvailable = false;
         this.tag = BaseSpeechListener.class.getSimpleName();
+        this.intentClass = intentClass;
     }
 
     @Override
     public void onReadyForSpeech(Bundle params) {
         Log.d(tag, "Ready for speech!");
-        Toast.makeText(this.activity, "Speak now!!!", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -75,7 +76,11 @@ public abstract class BaseSpeechListener implements RecognitionListener {
             ArrayList<String> data = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
 
             if (data != null) {
-                this.handleResults(data);
+                boolean continueListening = this.handleResults(data);
+
+                if (!continueListening) {
+                    return;
+                }
             }
         }
 
@@ -105,14 +110,20 @@ public abstract class BaseSpeechListener implements RecognitionListener {
             return;
         }
 
+        if (!SpeechRecognizer.isRecognitionAvailable(this.activity)) {
+            return;
+        }
+
         this.speechRecognizer.destroy();
 
-        this.intent = SpeechRecognizerFactory.createSpeechRecognitionIntent(this.activity);
-        this.speechRecognizer = SpeechRecognizerFactory.createMenuSpeechRecognizer(this.activity, this.intent);
+        this.intent = SpeechRecognizerFactory.createSpeechRecognitionIntent(this.activity, this.intentClass);
+        this.speechRecognizer = this.getSpeechRecognizer(this.activity, this.intent, this.intentClass);
         this.speechRecognizer.startListening(this.intent);
 
         this.isSpeechRecognizerAvailable = false;
     }
 
-    protected abstract void handleResults(ArrayList<String> data);
+    protected abstract boolean handleResults(ArrayList<String> data);
+
+    protected abstract SpeechRecognizer getSpeechRecognizer(Activity activity, Intent intent, Class intentClass);
 }

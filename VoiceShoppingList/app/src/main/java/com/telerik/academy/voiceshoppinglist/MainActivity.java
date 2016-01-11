@@ -8,7 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-import com.telerik.academy.voiceshoppinglist.utilities.Commands;
+import com.telerik.academy.voiceshoppinglist.utilities.commands.MainMenuCommands;
 import com.telerik.academy.voiceshoppinglist.utilities.speech.SpeechRecognitionHandler;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         addShoppingListBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Commands.navigateToAddNewShoppingListActivity(MainActivity.this);
+                MainMenuCommands.navigateToAddNewShoppingListActivity(MainActivity.this);
             }
         });
 
@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         exitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Commands.exitApplication(MainActivity.this);
+                MainMenuCommands.exitApplication(MainActivity.this);
             }
         });
     }
