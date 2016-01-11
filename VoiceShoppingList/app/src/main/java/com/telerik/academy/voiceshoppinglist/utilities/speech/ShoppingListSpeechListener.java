@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.speech.SpeechRecognizer;
 import android.util.Log;
+import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -35,12 +37,14 @@ public class ShoppingListSpeechListener extends BaseSpeechListener {
             LinearLayout productsList = (LinearLayout) this.activity.findViewById(R.id.productsList);
             ScrollView mainScrollView = (ScrollView) this.activity.findViewById(R.id.mainScrollView);
 
+            // All commands without parameters must be before the commands with parameters.
             if (StringsSimilarityCalculator.calculateSimilarityCoefficient(Constants.ADD_PRODUCT_COMMAND, commandString) >=
                     Constants.ACCEPTABLE_SIMILARITY_COEFFICIENT) {
                 ShoppingListCommands.addProduct(this.activity, productNameContainer, productsList, mainScrollView);
                 return true;
             }
 
+            // All commands with parameters must be after the commands without parameters.
             int indexOfLastWhitespace = commandString.lastIndexOf(' ');
 
             if (indexOfLastWhitespace < 0 || indexOfLastWhitespace >= commandString.length()) {
@@ -54,15 +58,34 @@ public class ShoppingListSpeechListener extends BaseSpeechListener {
                     Constants.ACCEPTABLE_SIMILARITY_COEFFICIENT) {
                 ShoppingListCommands.setProductName(productNameContainer, commandParameter);
                 return true;
+            } else if (StringsSimilarityCalculator.calculateSimilarityCoefficient(Constants.CHECK_PRODUCT_COMMAND, commandType) >=
+                    Constants.ACCEPTABLE_SIMILARITY_COEFFICIENT) {
+
+                CheckBox checkBox = findProductsCheckboxByTag(commandParameter, Constants.CHECKBOX_TAG, productsList);
+
+                if (checkBox == null) {
+                    continue;
+                }
+
+                checkBox.setChecked(true);
+
+                return true;
+            } else if (StringsSimilarityCalculator.calculateSimilarityCoefficient(Constants.UNCHECK_PRODUCT_COMMAND, commandType) >=
+                    Constants.ACCEPTABLE_SIMILARITY_COEFFICIENT) {
+
+                CheckBox checkBox = findProductsCheckboxByTag(commandParameter, Constants.CHECKBOX_TAG, productsList);
+
+                if (checkBox == null) {
+                    continue;
+                }
+
+                checkBox.setChecked(false);
+
+                return true;
             }
         }
 
         return true;
-    }
-
-    @Override
-    protected SpeechRecognizer getSpeechRecognizer(Activity activity, Intent intent, Class intentClass) {
-        return SpeechRecognizerFactory.createShoppingListSpeechRecognizer(this.activity, this.intent, this.intentClass);
     }
 
     @Override
@@ -77,5 +100,26 @@ public class ShoppingListSpeechListener extends BaseSpeechListener {
         TextView commandResultTextView = (TextView) this.activity.findViewById(R.id.tv_shopping_list_commands_result);
         commandResultTextView.setText(R.string.please_wait_label);
         super.onEndOfSpeech();
+    }
+
+    @Override
+    protected SpeechRecognizer getSpeechRecognizer(Activity activity, Intent intent, Class intentClass) {
+        return SpeechRecognizerFactory.createShoppingListSpeechRecognizer(this.activity, this.intent, this.intentClass);
+    }
+
+    private static CheckBox findProductsCheckboxByTag(String commandParameter, String tag, LinearLayout productsList) {
+        int itemNumberInParent = 0;
+
+        try {
+            itemNumberInParent = Integer.parseInt(commandParameter);
+        } catch (NumberFormatException e) {
+            return null;
+        }
+
+        View currentProductContainer = productsList.getChildAt(itemNumberInParent - 1);
+
+        CheckBox checkBox = (CheckBox) currentProductContainer.findViewWithTag(tag);
+
+        return checkBox;
     }
 }

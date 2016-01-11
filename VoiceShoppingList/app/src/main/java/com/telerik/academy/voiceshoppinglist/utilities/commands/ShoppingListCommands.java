@@ -2,6 +2,7 @@ package com.telerik.academy.voiceshoppinglist.utilities.commands;
 
 import android.app.Activity;
 import android.content.ClipData;
+import android.content.Context;
 import android.graphics.Paint;
 import android.view.DragEvent;
 import android.view.MotionEvent;

@@ -12,4 +12,5 @@
     <string name="waiting_for_command_label">Waiting for command...</string>
     <string name="please_wait_label">Please wait.</string>
     <string name="add_item_label">Add item</string>
+    <string name="product_checkbox_tag">checkbox_tag</string>
 </resources>
