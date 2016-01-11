@@ -57,7 +57,9 @@ public class AddNewShoppingListActivity extends AppCompatActivity {
     public void onBackPressed() {
         Intent intent = new Intent(AddNewShoppingListActivity.this, MainActivity.class);
 
+        SpeechRecognitionHandler.stopListening();
         startActivity(intent);
+        finish();
         super.onBackPressed();
     }
 

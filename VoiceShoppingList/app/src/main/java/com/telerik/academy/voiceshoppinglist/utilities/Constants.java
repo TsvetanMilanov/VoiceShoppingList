@@ -1,7 +1,7 @@
 package com.telerik.academy.voiceshoppinglist.utilities;
 
 public final class Constants {
-    public static final int ACCEPTABLE_SIMILARITY_COEFFICIENT = 90;
+    public static final int ACCEPTABLE_SIMILARITY_COEFFICIENT = 80;
     public static final String CHECKBOX_TAG = "checkbox_tag";
 
     public static final String ADD_SHOPPING_LIST_COMMAND = "add new shopping list";

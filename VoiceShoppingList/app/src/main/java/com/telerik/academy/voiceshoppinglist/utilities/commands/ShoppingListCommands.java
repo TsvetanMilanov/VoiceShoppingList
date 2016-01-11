@@ -2,7 +2,6 @@ package com.telerik.academy.voiceshoppinglist.utilities.commands;
 
 import android.app.Activity;
 import android.content.ClipData;
-import android.content.Context;
 import android.graphics.Paint;
 import android.view.DragEvent;
 import android.view.MotionEvent;
@@ -12,11 +11,11 @@ import android.view.ViewManager;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.telerik.academy.voiceshoppinglist.R;
+import com.telerik.academy.voiceshoppinglist.utilities.Constants;
 import com.telerik.academy.voiceshoppinglist.utilities.OnSwipeTouchListener;
 
 public final class ShoppingListCommands {
@@ -35,7 +34,7 @@ public final class ShoppingListCommands {
         textInput.setOnTouchListener(new OnSwipeTouchListener(activity) {
             @Override
             public void onSwipeLeft(View v) {
-                onDeleteBtnClick(v);
+                deleteEditTextParent(v);
             }
         });
         row.setOnDragListener(new RowContentDragListener());
@@ -57,9 +56,52 @@ public final class ShoppingListCommands {
         nameContainer.setText(productName);
     }
 
+    public static boolean checkProduct(String commandParameter, LinearLayout productsList) {
+        CheckBox checkBox = findProductsCheckboxByTag(commandParameter, Constants.CHECKBOX_TAG, productsList);
 
-    public static void onDeleteBtnClick(View view) {
+        if (checkBox == null) {
+            return false;
+        }
+
+        checkBox.setChecked(!checkBox.isChecked());
+        
+        checkBox.callOnClick();
+
+        return true;
+    }
+
+    public static boolean uncheckProduct(String commandParameter, LinearLayout productsList) {
+        CheckBox checkBox = findProductsCheckboxByTag(commandParameter, Constants.CHECKBOX_TAG, productsList);
+
+        if (checkBox == null) {
+            return false;
+        }
+
+        checkBox.setChecked(!checkBox.isChecked());
+
+        checkBox.callOnClick();
+
+        return true;
+    }
+
+    public static void deleteEditTextParent(View view) {
         ((ViewManager) view.getParent().getParent()).removeView((View) view.getParent());
+    }
+
+    private static CheckBox findProductsCheckboxByTag(String commandParameter, String tag, LinearLayout productsList) {
+        int itemNumberInParent = 0;
+
+        try {
+            itemNumberInParent = Integer.parseInt(commandParameter);
+        } catch (NumberFormatException e) {
+            return null;
+        }
+
+        View currentProductContainer = productsList.getChildAt(itemNumberInParent - 1);
+
+        CheckBox checkBox = (CheckBox) currentProductContainer.findViewWithTag(tag);
+
+        return checkBox;
     }
 
     private static final class RowContentTouchListener implements View.OnTouchListener {

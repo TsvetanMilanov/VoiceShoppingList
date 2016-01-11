@@ -61,25 +61,17 @@ public class ShoppingListSpeechListener extends BaseSpeechListener {
             } else if (StringsSimilarityCalculator.calculateSimilarityCoefficient(Constants.CHECK_PRODUCT_COMMAND, commandType) >=
                     Constants.ACCEPTABLE_SIMILARITY_COEFFICIENT) {
 
-                CheckBox checkBox = findProductsCheckboxByTag(commandParameter, Constants.CHECKBOX_TAG, productsList);
-
-                if (checkBox == null) {
+                if (!ShoppingListCommands.checkProduct(commandParameter, productsList)) {
                     continue;
                 }
-
-                checkBox.setChecked(true);
 
                 return true;
             } else if (StringsSimilarityCalculator.calculateSimilarityCoefficient(Constants.UNCHECK_PRODUCT_COMMAND, commandType) >=
                     Constants.ACCEPTABLE_SIMILARITY_COEFFICIENT) {
 
-                CheckBox checkBox = findProductsCheckboxByTag(commandParameter, Constants.CHECKBOX_TAG, productsList);
-
-                if (checkBox == null) {
+                if (!ShoppingListCommands.uncheckProduct(commandParameter, productsList)) {
                     continue;
                 }
-
-                checkBox.setChecked(false);
 
                 return true;
             }
@@ -105,21 +97,5 @@ public class ShoppingListSpeechListener extends BaseSpeechListener {
     @Override
     protected SpeechRecognizer getSpeechRecognizer(Activity activity, Intent intent, Class intentClass) {
         return SpeechRecognizerFactory.createShoppingListSpeechRecognizer(this.activity, this.intent, this.intentClass);
-    }
-
-    private static CheckBox findProductsCheckboxByTag(String commandParameter, String tag, LinearLayout productsList) {
-        int itemNumberInParent = 0;
-
-        try {
-            itemNumberInParent = Integer.parseInt(commandParameter);
-        } catch (NumberFormatException e) {
-            return null;
-        }
-
-        View currentProductContainer = productsList.getChildAt(itemNumberInParent - 1);
-
-        CheckBox checkBox = (CheckBox) currentProductContainer.findViewWithTag(tag);
-
-        return checkBox;
     }
 }
