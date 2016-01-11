@@ -52,6 +52,18 @@ public final class ShoppingListCommands {
         Toast.makeText(activity, "Item added", Toast.LENGTH_SHORT).show();
     }
 
+    public static boolean deleteProduct(String commandParameter, ViewGroup productsList) {
+        View product = findViewByNumberInParent(commandParameter, productsList);
+
+        if (product == null) {
+            return false;
+        }
+
+        productsList.removeView(product);
+
+        return true;
+    }
+
     public static void setProductName(EditText nameContainer, String productName) {
         nameContainer.setText(productName);
     }
@@ -64,7 +76,7 @@ public final class ShoppingListCommands {
         }
 
         checkBox.setChecked(!checkBox.isChecked());
-        
+
         checkBox.callOnClick();
 
         return true;
@@ -89,6 +101,18 @@ public final class ShoppingListCommands {
     }
 
     private static CheckBox findProductsCheckboxByTag(String commandParameter, String tag, LinearLayout productsList) {
+        View currentProductContainer = findViewByNumberInParent(commandParameter, productsList);
+
+        if (currentProductContainer == null) {
+            return null;
+        }
+
+        CheckBox checkBox = (CheckBox) currentProductContainer.findViewWithTag(tag);
+
+        return checkBox;
+    }
+
+    private static View findViewByNumberInParent(String commandParameter, ViewGroup productsList) {
         int itemNumberInParent = 0;
 
         try {
@@ -97,11 +121,9 @@ public final class ShoppingListCommands {
             return null;
         }
 
-        View currentProductContainer = productsList.getChildAt(itemNumberInParent - 1);
+        View foundView = productsList.getChildAt(itemNumberInParent - 1);
 
-        CheckBox checkBox = (CheckBox) currentProductContainer.findViewWithTag(tag);
-
-        return checkBox;
+        return foundView;
     }
 
     private static final class RowContentTouchListener implements View.OnTouchListener {

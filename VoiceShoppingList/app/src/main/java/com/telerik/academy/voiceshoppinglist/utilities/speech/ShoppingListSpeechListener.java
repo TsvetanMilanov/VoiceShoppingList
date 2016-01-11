@@ -74,6 +74,14 @@ public class ShoppingListSpeechListener extends BaseSpeechListener {
                 }
 
                 return true;
+            } else if (StringsSimilarityCalculator.calculateSimilarityCoefficient(Constants.DELETE_PRODUCT_COMMAND, commandType) >=
+                    Constants.ACCEPTABLE_SIMILARITY_COEFFICIENT) {
+
+                if (!ShoppingListCommands.deleteProduct(commandParameter, productsList)) {
+                    continue;
+                }
+
+                return true;
             }
         }
 
