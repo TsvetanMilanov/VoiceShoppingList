@@ -22,25 +22,12 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <EditText
+            android:id="@+id/newProductNameInput"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_weight="1"
+            android:hint="Add item" />
 
-            <EditText
-                android:id="@+id/newProductNameInput"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="Add item" />
-
-            <!--<android.support.design.widget.FloatingActionButton-->
-                <!--android:id="@+id/addItem"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_gravity="right"-->
-                <!--android:onClick="onAddBtnClick"-->
-                <!--android:src="@android:drawable/ic_input_add" />-->
-        </LinearLayout>
     </LinearLayout>
 </ScrollView>
