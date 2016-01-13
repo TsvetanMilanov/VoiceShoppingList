@@ -3,12 +3,14 @@ package com.telerik.academy.voiceshoppinglist.utilities;
 /**
  * Created by DevNinja on 11-Jan-16.
  */
+import android.content.ClipData;
 import android.content.Context;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
+import android.view.ViewGroup;
 
 public class OnSwipeTouchListener implements OnTouchListener {
 
@@ -37,7 +39,7 @@ public class OnSwipeTouchListener implements OnTouchListener {
 
         @Override
         public boolean onDown(MotionEvent e) {
-            return false;
+            return true;
         }
 
         @Override
@@ -52,6 +54,16 @@ public class OnSwipeTouchListener implements OnTouchListener {
                 return true;
             }
             return false;
+        }
+
+        @Override
+        public void onLongPress(MotionEvent e) {
+            View row = ((ViewGroup) view);
+            ClipData data = ClipData.newPlainText("", "");
+            View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(row);
+            row.startDrag(data, shadowBuilder, row, 0);
+            row.setVisibility(View.INVISIBLE);
+            super.onLongPress(e);
         }
     }
 }

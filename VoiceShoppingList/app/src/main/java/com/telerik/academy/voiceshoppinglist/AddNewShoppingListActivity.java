@@ -15,6 +15,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.telerik.academy.voiceshoppinglist.utilities.OnSwipeTouchListener;
@@ -37,7 +38,7 @@ public class AddNewShoppingListActivity extends AppCompatActivity {
         mainScrollView = (ScrollView) findViewById(R.id.mainScrollView);
         productNameInput = (EditText) findViewById(R.id.newProductNameInput);
 
-        SpeechRecognitionHandler.startListeningForShoppingListCommands(this, AddNewShoppingListActivity.class);
+         SpeechRecognitionHandler.startListeningForShoppingListCommands(this, AddNewShoppingListActivity.class);
 
         productNameInput.setOnKeyListener(new View.OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -66,7 +67,7 @@ public class AddNewShoppingListActivity extends AppCompatActivity {
     public void onCheckBoxClick(View view) {
         CheckBox clickedBox = (CheckBox) view;
         ViewGroup parent = (ViewGroup) view.getParent();
-        EditText text = (EditText) parent.getChildAt(2);
+        TextView text = (TextView) parent.getChildAt(0);
 
         if (clickedBox.isChecked()) {
             text.setPaintFlags(text.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
