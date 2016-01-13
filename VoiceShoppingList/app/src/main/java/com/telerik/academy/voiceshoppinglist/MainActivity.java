@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.telerik.academy.voiceshoppinglist.utilities.AlertDialogFactory;
 import com.telerik.academy.voiceshoppinglist.utilities.commands.MainMenuCommands;
 import com.telerik.academy.voiceshoppinglist.utilities.speech.SpeechRecognitionHandler;
 
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         Button addShoppingListBtn = (Button) findViewById(R.id.btn_add_new_shopping_list);
+        Button myShoppingLists = (Button) findViewById(R.id.btn_my_shopping_lists);
         Button stopListeningBtn = (Button) findViewById(R.id.btn_stop_listening);
         Button exitBtn = (Button) findViewById(R.id.btn_exit);
 
@@ -28,6 +30,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 MainMenuCommands.navigateToAddNewShoppingListActivity(MainActivity.this);
+            }
+        });
+
+        myShoppingLists.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialogFactory.createInformationAlertDialog(MainActivity.this, "Implement me!", null).show();
             }
         });
 
