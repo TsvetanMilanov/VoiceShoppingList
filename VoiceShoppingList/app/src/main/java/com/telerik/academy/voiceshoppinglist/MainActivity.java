@@ -8,8 +8,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.telerik.academy.voiceshoppinglist.data.VoiceShoppingListDbHelper;
+import com.telerik.academy.voiceshoppinglist.data.models.Product;
+import com.telerik.academy.voiceshoppinglist.data.models.ShoppingList;
+import com.telerik.academy.voiceshoppinglist.utilities.AlertDialogFactory;
 import com.telerik.academy.voiceshoppinglist.utilities.commands.MainMenuCommands;
 import com.telerik.academy.voiceshoppinglist.utilities.speech.SpeechRecognitionHandler;
+
+import java.util.ArrayList;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,7 +27,10 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        // testDatabase();
+
         Button addShoppingListBtn = (Button) findViewById(R.id.btn_add_new_shopping_list);
+        Button myShoppingLists = (Button) findViewById(R.id.btn_my_shopping_lists);
         Button stopListeningBtn = (Button) findViewById(R.id.btn_stop_listening);
         Button exitBtn = (Button) findViewById(R.id.btn_exit);
 
@@ -28,6 +38,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 MainMenuCommands.navigateToAddNewShoppingListActivity(MainActivity.this);
+            }
+        });
+
+        myShoppingLists.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialogFactory.createInformationAlertDialog(MainActivity.this, "Implement me!", null).show();
             }
         });
 
@@ -44,6 +61,26 @@ public class MainActivity extends AppCompatActivity {
                 MainMenuCommands.exitApplication(MainActivity.this);
             }
         });
+    }
+
+    private void testDatabase() {
+        VoiceShoppingListDbHelper db = new VoiceShoppingListDbHelper(this);
+
+        ShoppingList sl = new ShoppingList(new Date(), 1d, 1d, "First shopping list");
+
+        Long slId = db.addShoppingList(sl);
+
+        Product product = new Product("banana", 10d, 20d, slId, true);
+
+        Long pId = db.addProduct(product);
+
+        ArrayList<ShoppingList> allSl = db.getAllShoppingLists();
+        ArrayList<Product> allP = db.getAllProducts();
+
+        ShoppingList cSl = db.getShoppingListById(slId);
+        Product cP = db.getProductById(pId);
+
+        ArrayList<Product> pBySl = db.getProductsByShoppingListId(slId);
     }
 
     @Override

@@ -6,14 +6,15 @@ import android.os.Bundle;
 import android.speech.SpeechRecognizer;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
-import android.widget.TextView;
-import android.widget.Toast;
 
+import com.telerik.academy.voiceshoppinglist.FinishShoppingListActivity;
 import com.telerik.academy.voiceshoppinglist.R;
+import com.telerik.academy.voiceshoppinglist.data.models.Product;
 import com.telerik.academy.voiceshoppinglist.utilities.Constants;
 import com.telerik.academy.voiceshoppinglist.utilities.StringsSimilarityCalculator;
 import com.telerik.academy.voiceshoppinglist.utilities.commands.ShoppingListCommands;
@@ -41,6 +42,23 @@ public class ShoppingListSpeechListener extends BaseSpeechListener {
                     Constants.ACCEPTABLE_SIMILARITY_COEFFICIENT) {
                 ShoppingListCommands.addProduct(this.activity, productNameContainer, productsList, mainScrollView);
                 return true;
+            } else if (StringsSimilarityCalculator.calculateSimilarityCoefficient(Constants.FINISH_SHOPPING_LIST_COMMAND, commandString) >=
+                    Constants.ACCEPTABLE_SIMILARITY_COEFFICIENT) {
+                ArrayList<Product> products = getAllProductsFromProductsList(productsList);
+
+                Intent intent = new Intent(this.activity, FinishShoppingListActivity.class);
+
+                Bundle bundle = new Bundle();
+
+                bundle.putSerializable(Constants.PRODUCTS_LIST_BUNDLE_KEY, products);
+
+                intent.putExtras(bundle);
+
+                this.activity.startActivity(intent);
+
+                this.speechRecognizer.destroy();
+                SpeechRecognitionHandler.stopListening();
+                return false;
             }
 
             // All commands with parameters must be after the commands without parameters.
@@ -86,6 +104,22 @@ public class ShoppingListSpeechListener extends BaseSpeechListener {
         }
 
         return true;
+    }
+
+    private ArrayList<Product> getAllProductsFromProductsList(ViewGroup productsList) {
+        ArrayList<Product> products = new ArrayList<>();
+
+        for (int i = 0; i < productsList.getChildCount(); i++) {
+            View child = productsList.getChildAt(i);
+
+            CheckBox checkbox = (CheckBox) child.findViewWithTag(this.activity.getResources().getString(R.string.product_checkbox_tag));
+            EditText editText = (EditText) child.findViewWithTag(this.activity.getResources().getString(R.string.edit_text_tag));
+
+            Product product = new Product(editText.getText().toString(), 0d, 0d, 0l, checkbox.isChecked());
+            products.add(product);
+        }
+
+        return products;
     }
 
     @Override

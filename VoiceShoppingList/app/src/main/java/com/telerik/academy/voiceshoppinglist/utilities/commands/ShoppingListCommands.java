@@ -36,8 +36,8 @@ public final class ShoppingListCommands {
         });
 
         row.setOnDragListener(new RowContentDragListener());
-        View topLayout = activity.findViewById(R.id.topLayout);
-        topLayout.setOnDragListener(new RowContentDragListener());
+        View list = activity.findViewById(R.id.productsList);
+        list.setOnDragListener(new RowContentDragListener());
 
         productsList.addView(row);
 
@@ -139,7 +139,7 @@ public final class ShoppingListCommands {
                     break;
 
                 case DragEvent.ACTION_DROP:
-                    if (sourceRow == target || target.getId() == R.id.topLayout) {
+                    if (sourceRow == target || target.getId() == R.id.productsList || target.getId() == R.id.newProductNameInput) {
                         sourceRow.setVisibility(View.VISIBLE);
                         break;
                     }
