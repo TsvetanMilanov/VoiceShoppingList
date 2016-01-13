@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
         Long slId = db.addShoppingList(sl);
 
-        Product product = new Product("banana", 10d, 20d, slId);
+        Product product = new Product("banana", 10d, 20d, slId, true);
 
         Long pId = db.addProduct(product);
 

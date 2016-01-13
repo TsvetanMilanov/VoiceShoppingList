@@ -1,21 +1,25 @@
 package com.telerik.academy.voiceshoppinglist.data.models;
 
-public class Product {
+import java.io.Serializable;
+
+public class Product implements Serializable {
     private Long _ID;
     private String name;
     private Double price;
     private Double quantity;
     private Long shoppingListId;
+    private Boolean isChecked;
 
-    public Product(String name, Double price, Double quantity, Long shoppingListId) {
+    public Product(String name, Double price, Double quantity, Long shoppingListId, Boolean isChecked) {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
         this.shoppingListId = shoppingListId;
+        this.isChecked = isChecked;
     }
 
-    public Product(Long _ID, String name, Double price, Double quantity, Long shoppingListId) {
-        this(name, price, quantity, shoppingListId);
+    public Product(Long _ID, String name, Double price, Double quantity, Long shoppingListId, Boolean isChecked) {
+        this(name, price, quantity, shoppingListId, isChecked);
         this._ID = _ID;
     }
 
@@ -53,6 +57,14 @@ public class Product {
 
     public Long getShoppingListId() {
         return shoppingListId;
+    }
+
+    public Boolean getIsChecked() {
+        return isChecked;
+    }
+
+    public void setIsChecked(Boolean isChecked) {
+        this.isChecked = isChecked;
     }
 
     public void setShoppingListId(Long shoppingListId) {

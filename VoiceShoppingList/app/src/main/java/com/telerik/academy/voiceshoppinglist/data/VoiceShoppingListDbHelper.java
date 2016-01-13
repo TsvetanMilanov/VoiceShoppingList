@@ -34,7 +34,8 @@ public class VoiceShoppingListDbHelper extends SQLiteOpenHelper {
                     ShoppingListContract.ProductEntry.COLUMN_NAME + TEXT_TYPE + COMMA_SEP +
                     ShoppingListContract.ProductEntry.COLUMN_PRICE + REAL_TYPE + COMMA_SEP +
                     ShoppingListContract.ProductEntry.COLUMN_QUANTITY + REAL_TYPE + COMMA_SEP +
-                    ShoppingListContract.ProductEntry.COLUMN_SHOPPING_LIST_ID + INTEGER_TYPE +
+                    ShoppingListContract.ProductEntry.COLUMN_SHOPPING_LIST_ID + INTEGER_TYPE + COMMA_SEP +
+                    ShoppingListContract.ProductEntry.COLUMN_IS_CHECKED + INTEGER_TYPE +
                     " )";
     private static final String COLUMN_NAME_NULLABLE = "NULLABLE";
 
@@ -123,6 +124,7 @@ public class VoiceShoppingListDbHelper extends SQLiteOpenHelper {
         values.put(ShoppingListContract.ProductEntry.COLUMN_PRICE, product.getPrice());
         values.put(ShoppingListContract.ProductEntry.COLUMN_QUANTITY, product.getQuantity());
         values.put(ShoppingListContract.ProductEntry.COLUMN_SHOPPING_LIST_ID, product.getShoppingListId());
+        values.put(ShoppingListContract.ProductEntry.COLUMN_IS_CHECKED, product.getIsChecked() ? 1 : 0);
 
         long newRowId;
         newRowId = db.insert(
@@ -223,8 +225,9 @@ public class VoiceShoppingListDbHelper extends SQLiteOpenHelper {
         Double quantity = cursor.getDouble(cursor.getColumnIndex(ShoppingListContract.ProductEntry.COLUMN_QUANTITY));
         Long shoppingListId = cursor.getLong(cursor.getColumnIndex(ShoppingListContract.ProductEntry.COLUMN_SHOPPING_LIST_ID));
         String name = cursor.getString(cursor.getColumnIndex(ShoppingListContract.ProductEntry.COLUMN_NAME));
+        Boolean isChecked = cursor.getInt(cursor.getColumnIndex(ShoppingListContract.ProductEntry.COLUMN_IS_CHECKED)) == 0 ? false : true;
 
-        Product product = new Product(id, name, price, quantity, shoppingListId);
+        Product product = new Product(id, name, price, quantity, shoppingListId, isChecked);
 
         return product;
     }

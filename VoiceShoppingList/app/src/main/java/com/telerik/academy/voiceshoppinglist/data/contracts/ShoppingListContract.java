@@ -17,5 +17,6 @@ public final class ShoppingListContract {
         public static final String COLUMN_PRICE = "price";
         public static final String COLUMN_QUANTITY = "quantity";
         public static final String COLUMN_SHOPPING_LIST_ID = "shopping_list_id";
+        public static final String COLUMN_IS_CHECKED = "is_checked";
     }
 }

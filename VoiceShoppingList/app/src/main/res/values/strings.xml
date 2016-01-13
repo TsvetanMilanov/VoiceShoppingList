@@ -13,4 +13,7 @@
     <string name="please_wait_label">Please wait.</string>
     <string name="add_item_label">Add item</string>
     <string name="product_checkbox_tag">checkbox_tag</string>
+    <string name="edit_text_tag">edit_text_tag</string>
+    <string name="shopping_list_name_label">Shopping list name</string>
+    <string name="save_to_local_db_label">Save to local database</string>
 </resources>

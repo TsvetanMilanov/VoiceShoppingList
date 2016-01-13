@@ -1,10 +1,11 @@
 package com.telerik.academy.voiceshoppinglist.data.models;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class ShoppingList {
+public class ShoppingList implements Serializable {
     private static final String DEFAULT_SQLITE_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
     private Long _ID;
     private String name;
