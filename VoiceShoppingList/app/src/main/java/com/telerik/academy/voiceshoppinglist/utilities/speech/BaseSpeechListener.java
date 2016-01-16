@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.speech.RecognitionListener;
 import android.speech.SpeechRecognizer;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -76,6 +77,25 @@ public abstract class BaseSpeechListener implements RecognitionListener {
         Log.e(tag, "Error! " + error);
 
         TextView commandResultTextView = (TextView) this.activity.findViewById(this.resultTextViewId);
+
+        switch (error) {
+            case SpeechRecognizer.ERROR_SERVER:
+                AlertDialogFactory.createInformationAlertDialog(this.activity, "There is something wrong with Google's server. Please try again later.", null).show();
+                commandResultTextView.setVisibility(View.INVISIBLE);
+                return;
+            case SpeechRecognizer.ERROR_CLIENT:
+                AlertDialogFactory.createInformationAlertDialog(this.activity, "There is something wrong with your device. Please try again later.", null).show();
+                commandResultTextView.setVisibility(View.INVISIBLE);
+                return;
+            case SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS:
+                AlertDialogFactory.createInformationAlertDialog(this.activity, "You should allow access to Microphone and Audio record on your device for this application to recognize your speech.", null).show();
+                commandResultTextView.setVisibility(View.INVISIBLE);
+                return;
+            case SpeechRecognizer.ERROR_NETWORK:
+                AlertDialogFactory.createInformationAlertDialog(this.activity, "There is no internet connection. Please try again later.", null).show();
+                commandResultTextView.setVisibility(View.INVISIBLE);
+                return;
+        }
 
         if (commandResultTextView != null) {
             commandResultTextView.setText(R.string.please_wait_label);
