@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.speech.SpeechRecognizer;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,7 +12,7 @@ import android.widget.ListView;
 
 import com.telerik.academy.voiceshoppinglist.data.VoiceShoppingListDbHelper;
 import com.telerik.academy.voiceshoppinglist.data.models.ShoppingList;
-import com.telerik.academy.voiceshoppinglist.utilities.speech.SpeechRecognizerFactory;
+import com.telerik.academy.voiceshoppinglist.utilities.Constants;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,10 +26,10 @@ public class LoadSavedListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_load_shopping_list_activity);
 
         VoiceShoppingListDbHelper db = new VoiceShoppingListDbHelper(this);
-        ArrayList<ShoppingList> allItemLists = db.getAllShoppingLists();
+        final ArrayList<ShoppingList> allItemLists = db.getAllShoppingLists();
 
         final ArrayList<String> list = new ArrayList<>();
-        for (ShoppingList itemsList: allItemLists) {
+        for (ShoppingList itemsList : allItemLists) {
             list.add(itemsList.getName());
         }
 
@@ -45,21 +44,15 @@ public class LoadSavedListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, final View view,
                                     int position, long id) {
-                final String item = (String) parent.getItemAtPosition(position);
-//                list.remove(item);
-//                adapter.notifyDataSetChanged();
 
                 Activity activity = (Activity) view.getContext();
-                Intent intent = new Intent(activity, AddNewShoppingListActivity.class);
-                intent.putExtra(android.content.Intent.EXTRA_TEXT, "" + position);
+                Intent intent = new Intent(activity, ViewShoppingListActivity.class);
 
-                // Need to stop the current speech recognizer because it will try to destroy it in the next
-                // activity where the intent class is not the same and the will cause service not registered exception.
-                SpeechRecognizer currentSpeechRecognizer = SpeechRecognizerFactory.getCurrentSpeechRecognizer();
+                Bundle bundle = new Bundle();
 
-                if (currentSpeechRecognizer != null) {
-                    currentSpeechRecognizer.destroy();
-                }
+                bundle.putSerializable(Constants.SHOPPING_LIST_BUNDLE_KEY, allItemLists.get(position));
+
+                intent.putExtras(bundle);
 
                 activity.startActivity(intent);
                 activity.finish();

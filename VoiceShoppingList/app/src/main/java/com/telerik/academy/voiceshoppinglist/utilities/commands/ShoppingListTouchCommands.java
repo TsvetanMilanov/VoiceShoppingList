@@ -79,10 +79,10 @@ public final class ShoppingListTouchCommands {
             }
         });
 
-        Number itemsCount = ((ViewGroup) activity.findViewById(R.id.productsList)).getChildCount();
+        int itemsCount = ((ViewGroup) activity.findViewById(R.id.productsList)).getChildCount();
         TextView productIndexView = (TextView) row.findViewWithTag(activity.getResources().getString(R.string.product_index_tag));
         productIndexView.setText("");
-        productIndexView.setText(itemsCount + ". ");
+        productIndexView.setText((itemsCount + 1) + ". ");
         return row;
     }
 

@@ -28,7 +28,7 @@
         <activity android:name=".FinishShoppingListActivity" />
         <activity android:name=".LoadSavedListActivity" />
         <activity
-            android:name=".AddShoppingListActivity"
+            android:name=".ViewShoppingListActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>

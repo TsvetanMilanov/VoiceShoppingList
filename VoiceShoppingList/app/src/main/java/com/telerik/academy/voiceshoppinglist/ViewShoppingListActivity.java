@@ -21,13 +21,19 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.telerik.academy.voiceshoppinglist.data.VoiceShoppingListDbHelper;
+import com.telerik.academy.voiceshoppinglist.data.models.Product;
+import com.telerik.academy.voiceshoppinglist.data.models.ShoppingList;
+import com.telerik.academy.voiceshoppinglist.utilities.Constants;
 import com.telerik.academy.voiceshoppinglist.utilities.commands.ShoppingListTouchCommands;
 import com.telerik.academy.voiceshoppinglist.utilities.commands.ShoppingListVoiceCommands;
 import com.telerik.academy.voiceshoppinglist.utilities.speech.SpeechRecognitionHandler;
 
-public class AddShoppingListActivity extends AppCompatActivity {
-    private TextView commandsResultTextView;
+import java.util.ArrayList;
 
+public class ViewShoppingListActivity extends AppCompatActivity {
+    private TextView commandsResultTextView;
+    private ShoppingList shoppingList;
     private LinearLayout productsList;
     private ScrollView mainScrollView;
     private EditText productNameInput;
@@ -62,6 +68,16 @@ public class AddShoppingListActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        Bundle extras = getIntent().getExtras();
+
+        if (extras != null) {
+            shoppingList = (ShoppingList) getIntent().getExtras().get(Constants.SHOPPING_LIST_BUNDLE_KEY);
+        }
+        
+        if (shoppingList != null) {
+            loadItemsList();
+        }
     }
 
     @Override
@@ -74,6 +90,10 @@ public class AddShoppingListActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.option_finish_shopping_list:
+                if (shoppingList != null) {
+                    return true;
+                }
+
                 ShoppingListVoiceCommands.navigateToFinishShoppingListActivity(context, productsList);
                 return true;
             case R.id.option_start_listening:
@@ -112,6 +132,17 @@ public class AddShoppingListActivity extends AppCompatActivity {
             text.setPaintFlags(text.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         } else {
             text.setPaintFlags(text.getPaintFlags() & ~(Paint.STRIKE_THRU_TEXT_FLAG));
+        }
+    }
+
+    private void loadItemsList() {
+        VoiceShoppingListDbHelper db = new VoiceShoppingListDbHelper(this);
+
+        ArrayList<Product> products = db.getProductsByShoppingListId(shoppingList.get_ID());
+
+        for (Product product : products) {
+            productNameInput.setText(product.getName());
+            ShoppingListTouchCommands.addProduct(this, productNameInput, productsList, mainScrollView);
         }
     }
 }
