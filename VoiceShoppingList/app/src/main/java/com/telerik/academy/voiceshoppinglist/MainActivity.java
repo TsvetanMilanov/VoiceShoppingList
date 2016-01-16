@@ -51,7 +51,8 @@ public class MainActivity extends AppCompatActivity {
         myShoppingLists.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialogFactory.createInformationAlertDialog(MainActivity.this, "Implement me!", null).show();
+                MainMenuCommands.navigateToLoadSavedListActivity(MainActivity.this);
+//                AlertDialogFactory.createInformationAlertDialog(MainActivity.this, "Implement me!", null).show();
             }
         });
 
