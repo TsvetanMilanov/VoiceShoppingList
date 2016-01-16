@@ -3,18 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:activity="com.telerik.academy.voiceshoppinglist.MainActivity">
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/action_stop_listening"
-        android:orderInCategory="200"
-        android:title="@string/stop_listening"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/action_exit"
-        android:orderInCategory="300"
-        android:title="@string/exit"
-        app:showAsAction="never" />
+        android:id="@+id/option_start_listening"
+        android:icon="@android:drawable/ic_btn_speak_now"
+        android:title="@string/start_listening_label"
+        app:showAsAction="always" />
 </menu>

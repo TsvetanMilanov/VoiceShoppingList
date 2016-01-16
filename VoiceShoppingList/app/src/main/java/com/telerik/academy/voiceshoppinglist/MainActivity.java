@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.telerik.academy.voiceshoppinglist.data.VoiceShoppingListDbHelper;
 import com.telerik.academy.voiceshoppinglist.data.models.Product;
@@ -19,6 +20,8 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
+    private TextView commandsResultTextView;
+    private boolean isListening;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +29,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        commandsResultTextView = (TextView) findViewById(R.id.tv_command_result);
+        commandsResultTextView.setVisibility(View.INVISIBLE);
+        isListening = false;
 
         // testDatabase();
 
@@ -51,7 +58,11 @@ public class MainActivity extends AppCompatActivity {
         stopListeningBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SpeechRecognitionHandler.stopListening();
+                if (isListening) {
+                    SpeechRecognitionHandler.stopListening();
+                    commandsResultTextView.setVisibility(View.INVISIBLE);
+                    isListening = !isListening;
+                }
             }
         });
 
@@ -94,7 +105,17 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         switch (id) {
-            case R.id.action_settings:
+            case R.id.option_start_listening:
+                if (!isListening) {
+                    SpeechRecognitionHandler.startListeningForShoppingListCommands(this, AddNewShoppingListActivity.class);
+                    commandsResultTextView.setVisibility(View.VISIBLE);
+                    isListening = !isListening;
+                } else {
+                    SpeechRecognitionHandler.stopListening();
+                    commandsResultTextView.setVisibility(View.INVISIBLE);
+                    isListening = !isListening;
+                }
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

@@ -16,4 +16,7 @@
     <string name="tv_product_name_container_tag">edit_text_tag</string>
     <string name="shopping_list_name_label">Shopping list name</string>
     <string name="save_to_local_db_label">Save to local database</string>
+    <string name="title_activity_add_shopping_list">AddShoppingListActivity</string>
+    <string name="finish_shopping_list_label">Finish shopping list</string>
+    <string name="start_listening_label">Start listening</string>
 </resources>

@@ -13,16 +13,10 @@ import com.telerik.academy.voiceshoppinglist.utilities.speech.SpeechRecognitionH
  * A placeholder fragment containing a simple view.
  */
 public class MainActivityFragment extends Fragment {
-    public MainActivityFragment() {
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
-        final Activity activity = this.getActivity();
-
-        SpeechRecognitionHandler.startListeningForMenuCommands(activity, MainActivityFragment.class);
 
         return view;
     }

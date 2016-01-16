@@ -25,7 +25,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".AddNewShoppingListActivity" />
-        <activity android:name=".FinishShoppingListActivity"></activity>
+        <activity android:name=".FinishShoppingListActivity" />
+        <activity
+            android:name=".AddShoppingListActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

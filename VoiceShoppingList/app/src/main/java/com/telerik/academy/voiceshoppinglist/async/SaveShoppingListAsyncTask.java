@@ -10,7 +10,7 @@ import com.telerik.academy.voiceshoppinglist.data.models.ShoppingList;
 import java.util.ArrayList;
 
 public class SaveShoppingListAsyncTask extends AsyncTask<Void, Void, Void> {
-    private SaveShoppingListCallback callback;
+    private SaveShoppingListCommand command;
     private Context context;
     private ShoppingList shoppingList;
     private ArrayList<Product> products;
@@ -19,11 +19,11 @@ public class SaveShoppingListAsyncTask extends AsyncTask<Void, Void, Void> {
             Context context,
             ShoppingList shoppingList,
             ArrayList<Product> products,
-            SaveShoppingListCallback callback) {
+            SaveShoppingListCommand command) {
         this.context = context;
         this.shoppingList = shoppingList;
         this.products = products;
-        this.callback = callback;
+        this.command = command;
     }
 
     @Override
@@ -42,7 +42,7 @@ public class SaveShoppingListAsyncTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected void onPostExecute(Void aVoid) {
-        callback.resolve();
+        command.execute();
 
         super.onPostExecute(aVoid);
     }

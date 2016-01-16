@@ -45,20 +45,8 @@ public class ShoppingListSpeechListener extends BaseSpeechListener {
                 return true;
             } else if (StringsSimilarityCalculator.calculateSimilarityCoefficient(Constants.FINISH_SHOPPING_LIST_COMMAND, commandString) >=
                     Constants.ACCEPTABLE_SIMILARITY_COEFFICIENT) {
-                ArrayList<Product> products = getAllProductsFromProductsList(productsList);
-
-                Intent intent = new Intent(this.activity, FinishShoppingListActivity.class);
-
-                Bundle bundle = new Bundle();
-
-                bundle.putSerializable(Constants.PRODUCTS_LIST_BUNDLE_KEY, products);
-
-                intent.putExtras(bundle);
-
-                this.activity.startActivity(intent);
-
+                ShoppingListCommands.navigateToFinishShoppingListActivity(this.activity, productsList);
                 this.speechRecognizer.destroy();
-                SpeechRecognitionHandler.stopListening();
                 return false;
             }
 
@@ -105,22 +93,6 @@ public class ShoppingListSpeechListener extends BaseSpeechListener {
         }
 
         return true;
-    }
-
-    private ArrayList<Product> getAllProductsFromProductsList(ViewGroup productsList) {
-        ArrayList<Product> products = new ArrayList<>();
-
-        for (int i = 0; i < productsList.getChildCount(); i++) {
-            View child = productsList.getChildAt(i);
-
-            CheckBox checkbox = (CheckBox) child.findViewWithTag(this.activity.getResources().getString(R.string.product_checkbox_tag));
-            TextView editText = (TextView) child.findViewWithTag(this.activity.getResources().getString(R.string.tv_product_name_container_tag));
-
-            Product product = new Product(editText.getText().toString(), 0d, 0d, 0l, checkbox.isChecked());
-            products.add(product);
-        }
-
-        return products;
     }
 
     @Override

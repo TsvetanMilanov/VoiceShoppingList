@@ -7,8 +7,7 @@
 
     <TextView
         android:id="@+id/tv_command_result"
-        style="@style/CommandsResultTextView"
-        android:layout_marginTop="60dp" />
+        style="@style/CommandsResultTextView" />
 
     <fragment
         android:id="@+id/fragment"
