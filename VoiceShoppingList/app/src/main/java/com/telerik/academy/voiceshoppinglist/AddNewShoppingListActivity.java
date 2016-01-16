@@ -19,7 +19,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.telerik.academy.voiceshoppinglist.utilities.OnSwipeTouchListener;
-import com.telerik.academy.voiceshoppinglist.utilities.commands.ShoppingListCommands;
+import com.telerik.academy.voiceshoppinglist.utilities.commands.ShoppingListVoiceCommands;
+import com.telerik.academy.voiceshoppinglist.utilities.commands.ShoppingListTouchCommands;
 import com.telerik.academy.voiceshoppinglist.utilities.speech.SpeechRecognitionHandler;
 import com.telerik.academy.voiceshoppinglist.utilities.speech.SpeechRecognizerFactory;
 
@@ -46,7 +47,7 @@ public class AddNewShoppingListActivity extends AppCompatActivity {
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                         (keyCode == KeyEvent.KEYCODE_ENTER)) {
                     // Perform action on key press
-                    ShoppingListCommands.addProduct(AddNewShoppingListActivity.this, productNameInput, productsList, mainScrollView);
+                    ShoppingListTouchCommands.addProduct(AddNewShoppingListActivity.this, productNameInput, productsList, mainScrollView);
                     return true;
                 }
                 return false;

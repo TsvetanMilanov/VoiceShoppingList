@@ -21,7 +21,8 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.telerik.academy.voiceshoppinglist.utilities.commands.ShoppingListCommands;
+import com.telerik.academy.voiceshoppinglist.utilities.commands.ShoppingListTouchCommands;
+import com.telerik.academy.voiceshoppinglist.utilities.commands.ShoppingListVoiceCommands;
 import com.telerik.academy.voiceshoppinglist.utilities.speech.SpeechRecognitionHandler;
 
 public class AddShoppingListActivity extends AppCompatActivity {
@@ -55,7 +56,7 @@ public class AddShoppingListActivity extends AppCompatActivity {
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                         (keyCode == KeyEvent.KEYCODE_ENTER)) {
                     // Perform action on key press
-                    ShoppingListCommands.addProduct(context, productNameInput, productsList, mainScrollView);
+                    ShoppingListTouchCommands.addProduct(context, productNameInput, productsList, mainScrollView);
                     return true;
                 }
                 return false;
@@ -73,7 +74,7 @@ public class AddShoppingListActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.option_finish_shopping_list:
-                ShoppingListCommands.navigateToFinishShoppingListActivity(context, productsList);
+                ShoppingListVoiceCommands.navigateToFinishShoppingListActivity(context, productsList);
                 return true;
             case R.id.option_start_listening:
                 if (!isListening) {

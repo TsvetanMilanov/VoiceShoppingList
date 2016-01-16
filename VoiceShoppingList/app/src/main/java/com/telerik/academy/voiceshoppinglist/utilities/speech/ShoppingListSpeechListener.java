@@ -18,7 +18,8 @@ import com.telerik.academy.voiceshoppinglist.R;
 import com.telerik.academy.voiceshoppinglist.data.models.Product;
 import com.telerik.academy.voiceshoppinglist.utilities.Constants;
 import com.telerik.academy.voiceshoppinglist.utilities.StringsSimilarityCalculator;
-import com.telerik.academy.voiceshoppinglist.utilities.commands.ShoppingListCommands;
+import com.telerik.academy.voiceshoppinglist.utilities.commands.ShoppingListTouchCommands;
+import com.telerik.academy.voiceshoppinglist.utilities.commands.ShoppingListVoiceCommands;
 
 import java.util.ArrayList;
 
@@ -41,11 +42,11 @@ public class ShoppingListSpeechListener extends BaseSpeechListener {
             // All commands without parameters must be before the commands with parameters.
             if (StringsSimilarityCalculator.calculateSimilarityCoefficient(Constants.ADD_PRODUCT_COMMAND, commandString) >=
                     Constants.ACCEPTABLE_SIMILARITY_COEFFICIENT) {
-                ShoppingListCommands.addProduct(this.activity, productNameContainer, productsList, mainScrollView);
+                ShoppingListTouchCommands.addProduct(this.activity, productNameContainer, productsList, mainScrollView);
                 return true;
             } else if (StringsSimilarityCalculator.calculateSimilarityCoefficient(Constants.FINISH_SHOPPING_LIST_COMMAND, commandString) >=
                     Constants.ACCEPTABLE_SIMILARITY_COEFFICIENT) {
-                ShoppingListCommands.navigateToFinishShoppingListActivity(this.activity, productsList);
+                ShoppingListVoiceCommands.navigateToFinishShoppingListActivity(this.activity, productsList);
                 this.speechRecognizer.destroy();
                 return false;
             }
@@ -62,13 +63,13 @@ public class ShoppingListSpeechListener extends BaseSpeechListener {
 
             if (StringsSimilarityCalculator.calculateSimilarityCoefficient(Constants.SET_PRODUCT_NAME_COMMAND, commandType) >=
                     Constants.ACCEPTABLE_SIMILARITY_COEFFICIENT) {
-                ShoppingListCommands.setProductName(productNameContainer, commandParameter);
-                ShoppingListCommands.addProduct(this.activity, productNameContainer, productsList, mainScrollView);
+                ShoppingListVoiceCommands.setProductName(productNameContainer, commandParameter);
+                ShoppingListTouchCommands.addProduct(this.activity, productNameContainer, productsList, mainScrollView);
                 return true;
             } else if (StringsSimilarityCalculator.calculateSimilarityCoefficient(Constants.CHECK_PRODUCT_COMMAND, commandType) >=
                     Constants.ACCEPTABLE_SIMILARITY_COEFFICIENT) {
 
-                if (!ShoppingListCommands.checkProduct(this.activity, productsList, commandParameter)) {
+                if (!ShoppingListVoiceCommands.checkProduct(this.activity, productsList, commandParameter)) {
                     continue;
                 }
 
@@ -76,7 +77,7 @@ public class ShoppingListSpeechListener extends BaseSpeechListener {
             } else if (StringsSimilarityCalculator.calculateSimilarityCoefficient(Constants.UNCHECK_PRODUCT_COMMAND, commandType) >=
                     Constants.ACCEPTABLE_SIMILARITY_COEFFICIENT) {
 
-                if (!ShoppingListCommands.uncheckProduct(this.activity, productsList, commandParameter)) {
+                if (!ShoppingListVoiceCommands.uncheckProduct(this.activity, productsList, commandParameter)) {
                     continue;
                 }
 
@@ -84,7 +85,7 @@ public class ShoppingListSpeechListener extends BaseSpeechListener {
             } else if (StringsSimilarityCalculator.calculateSimilarityCoefficient(Constants.DELETE_PRODUCT_COMMAND, commandType) >=
                     Constants.ACCEPTABLE_SIMILARITY_COEFFICIENT) {
 
-                if (!ShoppingListCommands.deleteProduct(commandParameter, productsList)) {
+                if (!ShoppingListVoiceCommands.deleteProduct(commandParameter, productsList)) {
                     continue;
                 }
 
