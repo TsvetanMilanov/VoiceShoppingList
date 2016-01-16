@@ -19,4 +19,5 @@
     <string name="title_activity_add_shopping_list">AddShoppingListActivity</string>
     <string name="finish_shopping_list_label">Finish shopping list</string>
     <string name="start_listening_label">Start listening</string>
+    <string name="product_index_tag" />
 </resources>

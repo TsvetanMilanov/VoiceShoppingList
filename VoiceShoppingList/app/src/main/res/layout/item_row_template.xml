@@ -6,6 +6,12 @@
     android:orientation="horizontal">
 
     <TextView
+        android:tag="@string/product_index_tag"
+        android:textSize="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp" />
+    <TextView
         android:tag="@string/tv_product_name_container_tag"
         android:textSize="25dp"
         android:layout_width="wrap_content"

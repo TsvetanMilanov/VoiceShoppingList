@@ -31,7 +31,7 @@ public final class ShoppingListCommands {
     public static void addProduct(final Activity activity, final EditText productNameInput, LinearLayout productsList, final ScrollView mainScrollView) {
         LinearLayout row = (LinearLayout) activity.getLayoutInflater().inflate(R.layout.item_row_template, null);
 
-        TextView textInput = (TextView) row.getChildAt(0);
+        final TextView textInput = (TextView) row.findViewWithTag(activity.getResources().getString(R.string.tv_product_name_container_tag));
 
         final String productName = productNameInput.getText().toString();
         productNameInput.setText("");
@@ -42,12 +42,12 @@ public final class ShoppingListCommands {
             @Override
             public void onSwipeLeft(View v) {
                 ((ViewGroup) v.getParent()).removeView((View) v);
+                reindexProducts(activity);
             }
 
             @Override
             public void onSwipeRight(View v) {
-                CheckBox clickedBox = (CheckBox) ((ViewGroup)v).getChildAt(1);
-//                clickedBox.setChecked(true);
+                CheckBox clickedBox = (CheckBox) ((ViewGroup) v).getChildAt(2);
                 clickedBox.performClick();
             }
         });
@@ -56,21 +56,26 @@ public final class ShoppingListCommands {
         View list = activity.findViewById(R.id.productsList);
         list.setOnDragListener(new RowContentDragListener());
 
-        TextView checkBox = (CheckBox) row.getChildAt(1);
+        TextView checkBox = (CheckBox) row.findViewWithTag(activity.getResources().getString(R.string.product_checkbox_tag));
         checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 CheckBox clickedBox = (CheckBox) v;
                 ViewGroup parent = (ViewGroup) v.getParent();
-                TextView text = (TextView) parent.getChildAt(0);
+//                TextView text = (TextView) parent.findViewWithTag(activity.getResources().getString(R.string.tv_product_name_container_tag));
 
                 if (clickedBox.isChecked()) {
-                    text.setPaintFlags(text.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    textInput.setPaintFlags(textInput.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                 } else {
-                    text.setPaintFlags(text.getPaintFlags() & ~(Paint.STRIKE_THRU_TEXT_FLAG));
+                    textInput.setPaintFlags(textInput.getPaintFlags() & ~(Paint.STRIKE_THRU_TEXT_FLAG));
                 }
             }
         });
+
+        Number itemsCount = ((ViewGroup) activity.findViewById(R.id.productsList)).getChildCount();
+        TextView productIndexView = (TextView) row.findViewWithTag(activity.getResources().getString(R.string.product_index_tag));
+        productIndexView.setText("");
+        productIndexView.setText(itemsCount + ". ");
 
         productsList.addView(row);
 
@@ -213,6 +218,8 @@ public final class ShoppingListCommands {
                     container.addView(sourceRow, index);
                     sourceRow.setVisibility(View.VISIBLE);
 
+                    reindexProducts((Activity) target.getContext());
+
                     break;
 
                 case DragEvent.ACTION_DRAG_ENDED:
@@ -223,6 +230,17 @@ public final class ShoppingListCommands {
             }
 
             return true;
+        }
+    }
+
+    private static void reindexProducts(Activity activity) {
+        ViewGroup productsList = (ViewGroup) activity.findViewById(R.id.productsList);
+
+        for (int i = 0; i < productsList.getChildCount(); i++) {
+            ViewGroup row = (ViewGroup) productsList.getChildAt(i);
+            TextView productIndexView = (TextView) row.findViewWithTag(activity.getResources().getString(R.string.product_index_tag));
+            productIndexView.setText("");
+            productIndexView.setText(i + ". ");
         }
     }
 }
