@@ -20,4 +20,8 @@
     <string name="finish_shopping_list_label">Finish shopping list</string>
     <string name="start_listening_label">Start listening</string>
     <string name="product_index_tag" />
+    <string name="created_on_label">Created on:</string>
+    <string name="latitude_label">Latitude:</string>
+    <string name="longitude_label">Longitude:</string>
+    <string name="products_count_label">Products count:</string>
 </resources>

@@ -1,13 +1,9 @@
 package com.telerik.academy.voiceshoppinglist;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
-import android.speech.SpeechRecognizer;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
@@ -43,7 +39,7 @@ public class ViewShoppingListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_shopping_list);
+        setContentView(R.layout.activity_view_shopping_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.shopping_list_toolbar);
         setSupportActionBar(toolbar);
 
@@ -74,7 +70,7 @@ public class ViewShoppingListActivity extends AppCompatActivity {
         if (extras != null) {
             shoppingList = (ShoppingList) getIntent().getExtras().get(Constants.SHOPPING_LIST_BUNDLE_KEY);
         }
-        
+
         if (shoppingList != null) {
             loadItemsList();
         }
@@ -98,7 +94,7 @@ public class ViewShoppingListActivity extends AppCompatActivity {
                 return true;
             case R.id.option_start_listening:
                 if (!isListening) {
-                    SpeechRecognitionHandler.startListeningForShoppingListCommands(context, AddNewShoppingListActivity.class);
+                    SpeechRecognitionHandler.startListeningForShoppingListCommands(context, ViewShoppingListActivity.class);
                     commandsResultTextView.setVisibility(View.VISIBLE);
                     isListening = !isListening;
                 } else {

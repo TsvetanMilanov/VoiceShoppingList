@@ -6,13 +6,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.ExpandableListView;
 
 import com.telerik.academy.voiceshoppinglist.data.VoiceShoppingListDbHelper;
 import com.telerik.academy.voiceshoppinglist.data.models.ShoppingList;
 import com.telerik.academy.voiceshoppinglist.utilities.Constants;
+import com.telerik.academy.voiceshoppinglist.utilities.ExpandableListAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,32 +33,52 @@ public class LoadSavedListActivity extends AppCompatActivity {
             list.add(itemsList.getName());
         }
 
-
-        final ListView listview = (ListView) findViewById(R.id.loadShoppingItemsListView);
-        final ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1, list);
-        listview.setAdapter(adapter);
-
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
+        ExpandableListView expandableListView = (ExpandableListView) findViewById(R.id.loadShoppingItemsExpandableListView);
+        expandableListView.setAdapter(new ExpandableListAdapter(this, allItemLists));
+        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, final View view,
-                                    int position, long id) {
-
-                Activity activity = (Activity) view.getContext();
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                Activity activity = (Activity) v.getContext();
                 Intent intent = new Intent(activity, ViewShoppingListActivity.class);
 
                 Bundle bundle = new Bundle();
 
-                bundle.putSerializable(Constants.SHOPPING_LIST_BUNDLE_KEY, allItemLists.get(position));
+                bundle.putSerializable(Constants.SHOPPING_LIST_BUNDLE_KEY, allItemLists.get(groupPosition));
 
                 intent.putExtras(bundle);
 
                 activity.startActivity(intent);
                 activity.finish();
+                return true;
             }
-
         });
+
+
+//        final ListView listview = (ListView) findViewById(R.id.loadShoppingItemsListView);
+//        final ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+//                android.R.layout.simple_list_item_1, list);
+//        listview.setAdapter(adapter);
+//
+//        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, final View view,
+//                                    int position, long id) {
+//
+//                Activity activity = (Activity) view.getContext();
+//                Intent intent = new Intent(activity, ViewShoppingListActivity.class);
+//
+//                Bundle bundle = new Bundle();
+//
+//                bundle.putSerializable(Constants.SHOPPING_LIST_BUNDLE_KEY, allItemLists.get(position));
+//
+//                intent.putExtras(bundle);
+//
+//                activity.startActivity(intent);
+//                activity.finish();
+//            }
+//
+//        });
     }
 
     private class StableArrayAdapter extends ArrayAdapter<String> {
