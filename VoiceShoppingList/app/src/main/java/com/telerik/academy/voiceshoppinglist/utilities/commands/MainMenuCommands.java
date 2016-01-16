@@ -2,6 +2,7 @@ package com.telerik.academy.voiceshoppinglist.utilities.commands;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.speech.SpeechRecognizer;
 
 import com.telerik.academy.voiceshoppinglist.AddNewShoppingListActivity;
 import com.telerik.academy.voiceshoppinglist.AddShoppingListActivity;
@@ -13,7 +14,12 @@ public final class MainMenuCommands {
 
         // Need to stop the current speech recognizer because it will try to destroy it in the next
         // activity where the intent class is not the same and the will cause service not registered exception.
-        SpeechRecognizerFactory.getCurrentSpeechRecognizer().destroy();
+        SpeechRecognizer currentSpeechRecognizer = SpeechRecognizerFactory.getCurrentSpeechRecognizer();
+
+        if (currentSpeechRecognizer != null) {
+            currentSpeechRecognizer.destroy();
+        }
+
         activity.startActivity(intent);
         activity.finish();
     }

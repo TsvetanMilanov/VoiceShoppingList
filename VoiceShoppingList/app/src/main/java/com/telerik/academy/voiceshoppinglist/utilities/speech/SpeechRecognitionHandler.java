@@ -20,8 +20,11 @@ public final class SpeechRecognitionHandler {
     }
 
     public static void stopListening() {
-        SpeechRecognizerFactory
-                .getCurrentSpeechRecognizer()
-                .destroy();
+        SpeechRecognizer currentSpeechRecognizer = SpeechRecognizerFactory
+                .getCurrentSpeechRecognizer();
+
+        if (currentSpeechRecognizer != null) {
+            currentSpeechRecognizer.destroy();
+        }
     }
 }

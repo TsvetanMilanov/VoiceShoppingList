@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.telerik.academy.voiceshoppinglist.R;
+import com.telerik.academy.voiceshoppinglist.utilities.AlertDialogFactory;
 
 import java.util.ArrayList;
 
@@ -62,7 +63,10 @@ public abstract class BaseSpeechListener implements RecognitionListener {
         Log.e(tag, "onEndOfSpeech()");
 
         TextView commandResultTextView = (TextView) this.activity.findViewById(this.resultTextViewId);
-        commandResultTextView.setText(R.string.please_wait_label);
+
+        if (commandResultTextView != null) {
+            commandResultTextView.setText(R.string.please_wait_label);
+        }
 
         this.restartSpeechListener();
     }
@@ -70,8 +74,6 @@ public abstract class BaseSpeechListener implements RecognitionListener {
     @Override
     public void onError(int error) {
         Log.e(tag, "Error! " + error);
-
-        // TODO: Finish the error handling.
 
         TextView commandResultTextView = (TextView) this.activity.findViewById(this.resultTextViewId);
 

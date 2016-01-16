@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
         switch (id) {
             case R.id.option_start_listening:
                 if (!isListening) {
-                    SpeechRecognitionHandler.startListeningForShoppingListCommands(this, AddNewShoppingListActivity.class);
+                    SpeechRecognitionHandler.startListeningForMenuCommands(this, AddNewShoppingListActivity.class);
                     commandsResultTextView.setVisibility(View.VISIBLE);
                     isListening = !isListening;
                 } else {
