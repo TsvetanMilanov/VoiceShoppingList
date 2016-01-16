@@ -18,11 +18,15 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.telerik.academy.voiceshoppinglist.data.VoiceShoppingListDbHelper;
+import com.telerik.academy.voiceshoppinglist.data.models.ShoppingList;
 import com.telerik.academy.voiceshoppinglist.utilities.OnSwipeTouchListener;
 import com.telerik.academy.voiceshoppinglist.utilities.commands.ShoppingListVoiceCommands;
 import com.telerik.academy.voiceshoppinglist.utilities.commands.ShoppingListTouchCommands;
 import com.telerik.academy.voiceshoppinglist.utilities.speech.SpeechRecognitionHandler;
 import com.telerik.academy.voiceshoppinglist.utilities.speech.SpeechRecognizerFactory;
+
+import java.util.ArrayList;
 
 public class AddNewShoppingListActivity extends AppCompatActivity {
 
@@ -39,7 +43,7 @@ public class AddNewShoppingListActivity extends AppCompatActivity {
         mainScrollView = (ScrollView) findViewById(R.id.mainScrollView);
         productNameInput = (EditText) findViewById(R.id.newProductNameInput);
 
-         SpeechRecognitionHandler.startListeningForShoppingListCommands(this, AddNewShoppingListActivity.class);
+        SpeechRecognitionHandler.startListeningForShoppingListCommands(this, AddNewShoppingListActivity.class);
 
         productNameInput.setOnKeyListener(new View.OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -53,6 +57,29 @@ public class AddNewShoppingListActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        Bundle extras = getIntent().getExtras();
+        int listIndex = -1;
+        if (extras != null) {
+            String extraText = extras.getString(Intent.EXTRA_TEXT);
+            if (extraText != null) {
+                listIndex = Integer.parseInt(extraText);
+            }
+        }
+
+        if (listIndex >=0) {
+            loadItemsList(listIndex);
+        }
+    }
+
+    private void loadItemsList(int listIndex) {
+        VoiceShoppingListDbHelper db = new VoiceShoppingListDbHelper(this);
+        ArrayList<ShoppingList> allItemLists = db.getAllShoppingLists();
+
+        ShoppingList loadedList = allItemLists.get(listIndex);
+        String name = loadedList.getName();
+        productNameInput.setText(name);
+        ShoppingListTouchCommands.addProduct(this, productNameInput, productsList, mainScrollView);
     }
 
     @Override
