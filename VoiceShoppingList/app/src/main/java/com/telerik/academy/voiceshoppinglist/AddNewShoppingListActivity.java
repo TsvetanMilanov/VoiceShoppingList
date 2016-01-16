@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.telerik.academy.voiceshoppinglist.data.VoiceShoppingListDbHelper;
+import com.telerik.academy.voiceshoppinglist.data.models.Product;
 import com.telerik.academy.voiceshoppinglist.data.models.ShoppingList;
 import com.telerik.academy.voiceshoppinglist.utilities.OnSwipeTouchListener;
 import com.telerik.academy.voiceshoppinglist.utilities.commands.ShoppingListVoiceCommands;
@@ -75,11 +76,22 @@ public class AddNewShoppingListActivity extends AppCompatActivity {
     private void loadItemsList(int listIndex) {
         VoiceShoppingListDbHelper db = new VoiceShoppingListDbHelper(this);
         ArrayList<ShoppingList> allItemLists = db.getAllShoppingLists();
-
         ShoppingList loadedList = allItemLists.get(listIndex);
-        String name = loadedList.getName();
-        productNameInput.setText(name);
-        ShoppingListTouchCommands.addProduct(this, productNameInput, productsList, mainScrollView);
+//        String name = loadedList.getName();
+        Long listId = loadedList.get_ID();
+
+        ArrayList<Product> products = db.getProductsByShoppingListId(listId);  // TODO: This method does not work (all products are saved with id = 0 always
+//        ArrayList<Product> products = db.getAllProducts(); // this doesn`t work as well for the same reasons
+
+        for (Product product: products){
+//            Long productShoppingListId = product.getShoppingListId();
+//            if (productShoppingListId != listId) {
+//                return;
+//            }
+
+            productNameInput.setText(product.getName());
+            ShoppingListTouchCommands.addProduct(this, productNameInput, productsList, mainScrollView);
+        }
     }
 
     @Override
