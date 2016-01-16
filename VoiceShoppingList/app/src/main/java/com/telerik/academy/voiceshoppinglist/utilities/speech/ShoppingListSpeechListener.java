@@ -11,6 +11,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
 import com.telerik.academy.voiceshoppinglist.FinishShoppingListActivity;
 import com.telerik.academy.voiceshoppinglist.R;
@@ -113,7 +114,7 @@ public class ShoppingListSpeechListener extends BaseSpeechListener {
             View child = productsList.getChildAt(i);
 
             CheckBox checkbox = (CheckBox) child.findViewWithTag(this.activity.getResources().getString(R.string.product_checkbox_tag));
-            EditText editText = (EditText) child.findViewWithTag(this.activity.getResources().getString(R.string.edit_text_tag));
+            TextView editText = (TextView) child.findViewWithTag(this.activity.getResources().getString(R.string.tv_product_name_container_tag));
 
             Product product = new Product(editText.getText().toString(), 0d, 0d, 0l, checkbox.isChecked());
             products.add(product);
