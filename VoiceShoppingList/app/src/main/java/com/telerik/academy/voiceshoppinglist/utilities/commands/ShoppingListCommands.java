@@ -28,7 +28,7 @@ import com.telerik.academy.voiceshoppinglist.utilities.speech.SpeechRecognitionH
 import java.util.ArrayList;
 
 public final class ShoppingListCommands {
-    public static void addProduct(Activity activity, final EditText productNameInput, LinearLayout productsList, final ScrollView mainScrollView) {
+    public static void addProduct(final Activity activity, final EditText productNameInput, LinearLayout productsList, final ScrollView mainScrollView) {
         LinearLayout row = (LinearLayout) activity.getLayoutInflater().inflate(R.layout.item_row_template, null);
 
         TextView textInput = (TextView) row.getChildAt(0);
@@ -42,6 +42,13 @@ public final class ShoppingListCommands {
             @Override
             public void onSwipeLeft(View v) {
                 ((ViewGroup) v.getParent()).removeView((View) v);
+            }
+
+            @Override
+            public void onSwipeRight(View v) {
+                CheckBox clickedBox = (CheckBox) ((ViewGroup)v).getChildAt(1);
+//                clickedBox.setChecked(true);
+                clickedBox.performClick();
             }
         });
 
