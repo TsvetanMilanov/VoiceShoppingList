@@ -64,15 +64,5 @@ public class AddNewShoppingListActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
-    public void onCheckBoxClick(View view) {
-        CheckBox clickedBox = (CheckBox) view;
-        ViewGroup parent = (ViewGroup) view.getParent();
-        TextView text = (TextView) parent.getChildAt(0);
 
-        if (clickedBox.isChecked()) {
-            text.setPaintFlags(text.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-        } else {
-            text.setPaintFlags(text.getPaintFlags() & ~(Paint.STRIKE_THRU_TEXT_FLAG));
-        }
-    }
 }

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.speech.SpeechRecognizer;
 import android.view.DragEvent;
@@ -37,7 +38,6 @@ public final class ShoppingListCommands {
 
         textInput.setText(productName);
 
-//        row.setOnLongClickListener(new RowLongTouchListener());
         row.setOnTouchListener(new OnSwipeTouchListener(activity) {
             @Override
             public void onSwipeLeft(View v) {
@@ -49,6 +49,22 @@ public final class ShoppingListCommands {
         View list = activity.findViewById(R.id.productsList);
         list.setOnDragListener(new RowContentDragListener());
 
+        TextView checkBox = (CheckBox) row.getChildAt(1);
+        checkBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CheckBox clickedBox = (CheckBox) v;
+                ViewGroup parent = (ViewGroup) v.getParent();
+                TextView text = (TextView) parent.getChildAt(0);
+
+                if (clickedBox.isChecked()) {
+                    text.setPaintFlags(text.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                } else {
+                    text.setPaintFlags(text.getPaintFlags() & ~(Paint.STRIKE_THRU_TEXT_FLAG));
+                }
+            }
+        });
+
         productsList.addView(row);
 
         mainScrollView.postDelayed(new Runnable() {
@@ -58,8 +74,6 @@ public final class ShoppingListCommands {
                 productNameInput.requestFocus();
             }
         }, 200);
-
-//        Toast.makeText(activity, "Item added", Toast.LENGTH_SHORT).show();
     }
 
     public static boolean deleteProduct(String commandParameter, ViewGroup productsList) {
