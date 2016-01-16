@@ -30,12 +30,12 @@ public class SaveShoppingListAsyncTask extends AsyncTask<Void, Void, Void> {
     protected Void doInBackground(Void... params) {
         VoiceShoppingListDbHelper db = new VoiceShoppingListDbHelper(this.context);
 
+        long savedShoppingListId = db.addShoppingList(this.shoppingList);
+
         for (Product product : products) {
-            product.setShoppingListId(this.shoppingList.get_ID());
+            product.setShoppingListId(savedShoppingListId);
             db.addProduct(product);
         }
-
-        db.addShoppingList(this.shoppingList);
 
         return null;
     }

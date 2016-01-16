@@ -34,6 +34,10 @@ public class MainActivity extends AppCompatActivity {
         commandsResultTextView.setVisibility(View.INVISIBLE);
         isListening = false;
 
+        VoiceShoppingListDbHelper db = new VoiceShoppingListDbHelper(this);
+
+        ArrayList<Product> products = db.getAllProducts();
+
         // testDatabase();
 
         Button addShoppingListBtn = (Button) findViewById(R.id.btn_add_new_shopping_list);

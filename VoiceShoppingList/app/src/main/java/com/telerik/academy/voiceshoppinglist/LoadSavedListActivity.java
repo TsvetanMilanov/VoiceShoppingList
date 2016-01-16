@@ -12,13 +12,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.telerik.academy.voiceshoppinglist.data.VoiceShoppingListDbHelper;
-import com.telerik.academy.voiceshoppinglist.data.models.Product;
 import com.telerik.academy.voiceshoppinglist.data.models.ShoppingList;
-import com.telerik.academy.voiceshoppinglist.utilities.commands.MainMenuCommands;
 import com.telerik.academy.voiceshoppinglist.utilities.speech.SpeechRecognizerFactory;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -32,14 +29,14 @@ public class LoadSavedListActivity extends AppCompatActivity {
         VoiceShoppingListDbHelper db = new VoiceShoppingListDbHelper(this);
         ArrayList<ShoppingList> allItemLists = db.getAllShoppingLists();
 
-        final ArrayList<String> list = new ArrayList<String>();
+        final ArrayList<String> list = new ArrayList<>();
         for (ShoppingList itemsList: allItemLists) {
             list.add(itemsList.getName());
         }
 
 
-        final ListView listview = (ListView) findViewById(R.id.loadShoppingItemsListview);
-        final StableArrayAdapter adapter = new StableArrayAdapter(this,
+        final ListView listview = (ListView) findViewById(R.id.loadShoppingItemsListView);
+        final ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, list);
         listview.setAdapter(adapter);
 

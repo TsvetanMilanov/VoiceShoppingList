@@ -135,7 +135,7 @@ public final class ShoppingListTouchCommands {
             ViewGroup row = (ViewGroup) productsList.getChildAt(i);
             TextView productIndexView = (TextView) row.findViewWithTag(activity.getResources().getString(R.string.product_index_tag));
             productIndexView.setText("");
-            productIndexView.setText(i + ". ");
+            productIndexView.setText((i + 1) + ". ");
         }
     }
 }
