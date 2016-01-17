@@ -10,10 +10,10 @@
     tools:showIn="@layout/activity_main">
 
     <LinearLayout
-        android:layout_marginTop="10dp"
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:orientation="vertical">
 
         <Button
@@ -22,18 +22,49 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/add_new_shopping_list_label" />
+
         <Button
             android:id="@+id/btn_my_shopping_lists"
             style="@style/MainMenuButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/my_shopping_lists_label" />
+
+        <Button
+            android:id="@+id/btn_login"
+            style="@style/MainMenuButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login_label" />
+
+        <Button
+            android:id="@+id/btn_logout"
+            style="@style/MainMenuButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/logout_label" />
+
+        <Button
+            android:id="@+id/btn_backup"
+            style="@style/MainMenuButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/backup_label" />
+
+        <Button
+            android:id="@+id/btn_restore"
+            style="@style/MainMenuButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/restore_label" />
+
         <Button
             android:id="@+id/btn_help"
             style="@style/MainMenuButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/help_label" />
+
         <Button
             android:id="@+id/btn_exit"
             style="@style/MainMenuButton"

@@ -15,4 +15,6 @@ public final class Constants {
     public static final String FINISH_SHOPPING_LIST_COMMAND = "finish";
     public static final String PRODUCTS_LIST_BUNDLE_KEY = "products_list";
     public static final String SHOPPING_LIST_BUNDLE_KEY = "shopping list bundle key";
+    public static final String SHARED_PREFERENCES_KEY  = "shared_preferences";
+    public static final String TOKEN_SHARED_PREFERENCE_KEY = "token";
 }

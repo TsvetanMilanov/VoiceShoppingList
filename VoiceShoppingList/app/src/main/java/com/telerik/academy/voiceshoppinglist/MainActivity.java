@@ -1,6 +1,7 @@
 package com.telerik.academy.voiceshoppinglist;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ContentFrameLayout;
@@ -14,11 +15,13 @@ import android.widget.TextView;
 import com.telerik.academy.voiceshoppinglist.data.VoiceShoppingListDbHelper;
 import com.telerik.academy.voiceshoppinglist.data.models.Product;
 import com.telerik.academy.voiceshoppinglist.data.models.ShoppingList;
+import com.telerik.academy.voiceshoppinglist.utilities.Constants;
 import com.telerik.academy.voiceshoppinglist.utilities.commands.MainMenuCommands;
 import com.telerik.academy.voiceshoppinglist.utilities.speech.SpeechRecognitionHandler;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.jar.Manifest;
 
 public class MainActivity extends AppCompatActivity {
     private View micResultView;
@@ -42,9 +45,68 @@ public class MainActivity extends AppCompatActivity {
         // testDatabase();
 
         Button addShoppingListBtn = (Button) findViewById(R.id.btn_add_new_shopping_list);
-        Button myShoppingLists = (Button) findViewById(R.id.btn_my_shopping_lists);
+        Button myShoppingListsBtn = (Button) findViewById(R.id.btn_my_shopping_lists);
+        Button loginBtn = (Button) findViewById(R.id.btn_login);
+        Button logoutBtn = (Button) findViewById(R.id.btn_logout);
+        Button backupBtn = (Button) findViewById(R.id.btn_backup);
+        Button restoreBtn = (Button) findViewById(R.id.btn_restore);
         Button helpBtn = (Button) findViewById(R.id.btn_help);
         Button exitBtn = (Button) findViewById(R.id.btn_exit);
+
+        SharedPreferences settings = getSharedPreferences(Constants.SHARED_PREFERENCES_KEY, 0);
+        String token = settings.getString(Constants.TOKEN_SHARED_PREFERENCE_KEY, null);
+
+        if (token != null && token.length() > 0) {
+            loginBtn.setVisibility(View.GONE);
+            logoutBtn.setVisibility(View.VISIBLE);
+            backupBtn.setVisibility(View.VISIBLE);
+            restoreBtn.setVisibility(View.VISIBLE);
+        } else {
+            loginBtn.setVisibility(View.VISIBLE);
+            logoutBtn.setVisibility(View.GONE);
+            backupBtn.setVisibility(View.GONE);
+            restoreBtn.setVisibility(View.GONE);
+        }
+
+
+        loginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                MainActivity.this.startActivity(intent);
+                if (isListening) {
+                    SpeechRecognitionHandler.stopListening();
+                    commandsResultTextView.setVisibility(View.INVISIBLE);
+                    micResultView.setVisibility(View.INVISIBLE);
+                    isListening = !isListening;
+                }
+
+                MainActivity.this.finish();
+            }
+        });
+
+        logoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences settings = getSharedPreferences(Constants.SHARED_PREFERENCES_KEY, 0);
+
+                SharedPreferences.Editor editor = settings.edit();
+                editor.putString(Constants.TOKEN_SHARED_PREFERENCE_KEY, null);
+
+                editor.commit();
+
+                Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                MainActivity.this.startActivity(intent);
+                if (isListening) {
+                    SpeechRecognitionHandler.stopListening();
+                    commandsResultTextView.setVisibility(View.INVISIBLE);
+                    micResultView.setVisibility(View.INVISIBLE);
+                    isListening = !isListening;
+                }
+
+                MainActivity.this.finish();
+            }
+        });
 
         addShoppingListBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        myShoppingLists.setOnClickListener(new View.OnClickListener() {
+        myShoppingListsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MainMenuCommands.navigateToLoadSavedListActivity(MainActivity.this);
