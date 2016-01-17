@@ -150,6 +150,16 @@ public class ViewShoppingListActivity extends AppCompatActivity {
         for (Product product : products) {
             productNameInput.setText(product.getName());
             ShoppingListTouchCommands.addProduct(this, productNameInput, productsList, mainScrollView);
+
+            if (product.getIsChecked()) {
+                View lastChild = productsList.getChildAt(productsList.getChildCount() - 1);
+                CheckBox checkBox = (CheckBox) lastChild.findViewWithTag(context.getResources().getString(R.string.product_checkbox_tag));
+                TextView textView = (TextView) lastChild.findViewWithTag(context.getResources().getString(R.string.tv_product_name_container_tag));
+
+                textView.setPaintFlags(textView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
+                checkBox.setChecked(true);
+            }
         }
     }
 }
