@@ -15,7 +15,7 @@
     <string name="product_checkbox_tag">checkbox_tag</string>
     <string name="tv_product_name_container_tag">edit_text_tag</string>
     <string name="shopping_list_name_label">Shopping list name</string>
-    <string name="save_to_local_db_label">Save to local database</string>
+    <string name="save_label">Save</string>
     <string name="title_activity_add_shopping_list">AddShoppingListActivity</string>
     <string name="finish_shopping_list_label">Finish shopping list</string>
     <string name="start_listening_label">Start listening</string>
@@ -43,4 +43,5 @@
     <string name="backup_label">Backup</string>
     <string name="restore_label">Restore</string>
     <string name="title_activity_login">LoginActivity</string>
+    <string name="delete_all_label">Delete all</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.telerik.academy.voiceshoppinglist;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -20,6 +21,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 public class LoginActivity extends AppCompatActivity {
+
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +49,7 @@ public class LoginActivity extends AppCompatActivity {
                 LoginAsyncTask loginAsyncTask = new LoginAsyncTask(LoginActivity.this, uri, user, new LoginCommand() {
                     @Override
                     public void execute(String token) {
+                        progressDialog.dismiss();
                         if (token != null) {
                             SharedPreferences settings = getSharedPreferences(Constants.SHARED_PREFERENCES_KEY, 0);
 
@@ -61,6 +65,10 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
 
+                progressDialog = new ProgressDialog(LoginActivity.this);
+                progressDialog.setIndeterminate(true);
+                progressDialog.setMessage("Logging in...");
+                progressDialog.show();
                 loginAsyncTask.execute();
             }
         });

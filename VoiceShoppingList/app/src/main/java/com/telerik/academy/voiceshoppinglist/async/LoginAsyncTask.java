@@ -7,31 +7,14 @@ import com.google.gson.Gson;
 import com.telerik.academy.voiceshoppinglist.remote.RequestConstants;
 import com.telerik.academy.voiceshoppinglist.remote.models.UserRequestModel;
 
-
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.methods.HttpPutHC4;
-import org.apache.http.entity.ContentType;
-import org.apache.http.entity.StringEntityHC4;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
-import java.net.URLConnection;
 
 public class LoginAsyncTask extends AsyncTask<Void, Void, String> {
     private LoginCommand loginCommand;
@@ -87,7 +70,6 @@ public class LoginAsyncTask extends AsyncTask<Void, Void, String> {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
 
         return null;
     }

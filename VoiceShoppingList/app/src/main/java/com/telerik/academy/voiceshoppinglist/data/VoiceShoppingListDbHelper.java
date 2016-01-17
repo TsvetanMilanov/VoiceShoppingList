@@ -207,6 +207,12 @@ public class VoiceShoppingListDbHelper extends SQLiteOpenHelper {
         return product;
     }
 
+    public void deleteAllShoppingLists() {
+        SQLiteDatabase db = getWritableDatabase();
+        db.delete(ShoppingListContract.ShoppingListEntry.TABLE_NAME, null, null);
+        db.delete(ShoppingListContract.ProductEntry.TABLE_NAME, null, null);
+    }
+
     private ShoppingList createShoppingListFromCursor(Cursor cursor) {
         Long id = cursor.getLong(cursor.getColumnIndex(ShoppingListContract.ShoppingListEntry._ID));
         Double latitude = cursor.getDouble(cursor.getColumnIndex(ShoppingListContract.ShoppingListEntry.COLUMN_LATITUDE));

@@ -1,5 +1,6 @@
 package com.telerik.academy.voiceshoppinglist;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,13 +13,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.telerik.academy.voiceshoppinglist.async.BackupAsyncTask;
+import com.telerik.academy.voiceshoppinglist.async.BackupCommand;
+import com.telerik.academy.voiceshoppinglist.async.RestoreAsyncTask;
+import com.telerik.academy.voiceshoppinglist.async.RestoreCommand;
 import com.telerik.academy.voiceshoppinglist.data.VoiceShoppingListDbHelper;
 import com.telerik.academy.voiceshoppinglist.data.models.Product;
 import com.telerik.academy.voiceshoppinglist.data.models.ShoppingList;
+import com.telerik.academy.voiceshoppinglist.utilities.AlertDialogFactory;
 import com.telerik.academy.voiceshoppinglist.utilities.Constants;
 import com.telerik.academy.voiceshoppinglist.utilities.commands.MainMenuCommands;
 import com.telerik.academy.voiceshoppinglist.utilities.speech.SpeechRecognitionHandler;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.jar.Manifest;
@@ -27,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private View micResultView;
     private TextView commandsResultTextView;
     private boolean isListening;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         Button loginBtn = (Button) findViewById(R.id.btn_login);
         Button logoutBtn = (Button) findViewById(R.id.btn_logout);
         Button backupBtn = (Button) findViewById(R.id.btn_backup);
-        Button restoreBtn = (Button) findViewById(R.id.btn_restore);
+        final Button restoreBtn = (Button) findViewById(R.id.btn_restore);
         Button helpBtn = (Button) findViewById(R.id.btn_help);
         Button exitBtn = (Button) findViewById(R.id.btn_exit);
 
@@ -68,6 +76,51 @@ public class MainActivity extends AppCompatActivity {
             restoreBtn.setVisibility(View.GONE);
         }
 
+        backupBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BackupAsyncTask backupAsyncTask = new BackupAsyncTask(MainActivity.this, new BackupCommand() {
+                    @Override
+                    public void execute(String result) {
+                        progressDialog.dismiss();
+                        if (result != null && result.length() > 0) {
+                            AlertDialogFactory.createInformationAlertDialog(MainActivity.this, "Backup successful.", "Success!").show();
+                        } else {
+                            AlertDialogFactory.createInformationAlertDialog(MainActivity.this, "Backup not successful.", "Error!").show();
+                        }
+                    }
+                });
+
+                progressDialog = new ProgressDialog(MainActivity.this);
+                progressDialog.setIndeterminate(true);
+                progressDialog.setMessage("Backing up shopping lists...");
+                progressDialog.show();
+                backupAsyncTask.execute();
+            }
+        });
+
+        restoreBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RestoreAsyncTask restoreAsyncTask = new RestoreAsyncTask(MainActivity.this, new RestoreCommand() {
+                    @Override
+                    public void execute(Boolean result) {
+                        progressDialog.dismiss();
+                        if (result) {
+                            AlertDialogFactory.createInformationAlertDialog(MainActivity.this, "Restore successful.", "Success!").show();
+                        } else {
+                            AlertDialogFactory.createInformationAlertDialog(MainActivity.this, "Restore not successful.", "Error!").show();
+                        }
+                    }
+                });
+
+                progressDialog = new ProgressDialog(MainActivity.this);
+                progressDialog.setIndeterminate(true);
+                progressDialog.setMessage("Restoring shopping lists...");
+                progressDialog.show();
+                restoreAsyncTask.execute();
+            }
+        });
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override

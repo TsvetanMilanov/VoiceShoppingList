@@ -5,6 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ExpandableListView;
@@ -13,6 +16,7 @@ import com.telerik.academy.voiceshoppinglist.data.VoiceShoppingListDbHelper;
 import com.telerik.academy.voiceshoppinglist.data.models.ShoppingList;
 import com.telerik.academy.voiceshoppinglist.utilities.Constants;
 import com.telerik.academy.voiceshoppinglist.utilities.ExpandableListAdapter;
+import com.telerik.academy.voiceshoppinglist.utilities.speech.SpeechRecognitionHandler;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -106,4 +110,34 @@ public class LoadSavedListActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_list_shopping_lists, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id) {
+            case R.id.option_delete_all:
+                VoiceShoppingListDbHelper db = new VoiceShoppingListDbHelper(LoadSavedListActivity.this);
+                db.deleteAllShoppingLists();
+                Intent intent = new Intent(LoadSavedListActivity.this, MainActivity.class);
+                LoadSavedListActivity.this.startActivity(intent);
+                LoadSavedListActivity.this.finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(LoadSavedListActivity.this, MainActivity.class);
+        LoadSavedListActivity.this.startActivity(intent);
+        LoadSavedListActivity.this.finish();
+        super.onBackPressed();
+    }
 }
