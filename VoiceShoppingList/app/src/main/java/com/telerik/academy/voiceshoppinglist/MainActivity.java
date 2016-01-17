@@ -1,5 +1,6 @@
 package com.telerik.academy.voiceshoppinglist;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ContentFrameLayout;
@@ -7,14 +8,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.telerik.academy.voiceshoppinglist.data.VoiceShoppingListDbHelper;
 import com.telerik.academy.voiceshoppinglist.data.models.Product;
 import com.telerik.academy.voiceshoppinglist.data.models.ShoppingList;
-import com.telerik.academy.voiceshoppinglist.utilities.AlertDialogFactory;
 import com.telerik.academy.voiceshoppinglist.utilities.commands.MainMenuCommands;
 import com.telerik.academy.voiceshoppinglist.utilities.speech.SpeechRecognitionHandler;
 
@@ -44,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button addShoppingListBtn = (Button) findViewById(R.id.btn_add_new_shopping_list);
         Button myShoppingLists = (Button) findViewById(R.id.btn_my_shopping_lists);
-        Button stopListeningBtn = (Button) findViewById(R.id.btn_stop_listening);
+        Button helpBtn = (Button) findViewById(R.id.btn_help);
         Button exitBtn = (Button) findViewById(R.id.btn_exit);
 
         addShoppingListBtn.setOnClickListener(new View.OnClickListener() {
@@ -58,16 +57,20 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 MainMenuCommands.navigateToLoadSavedListActivity(MainActivity.this);
-//                AlertDialogFactory.createInformationAlertDialog(MainActivity.this, "Implement me!", null).show();
             }
         });
 
-        stopListeningBtn.setOnClickListener(new View.OnClickListener() {
+        helpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, HelpActivity.class);
+
+                MainActivity.this.startActivity(intent);
+                
                 if (isListening) {
                     SpeechRecognitionHandler.stopListening();
                     commandsResultTextView.setVisibility(View.INVISIBLE);
+                    micResultView.setVisibility(View.INVISIBLE);
                     isListening = !isListening;
                 }
             }
