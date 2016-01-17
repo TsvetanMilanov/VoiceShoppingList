@@ -1,18 +1,18 @@
 package com.telerik.academy.voiceshoppinglist;
 
-import android.app.FragmentContainer;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-
-import com.telerik.academy.voiceshoppinglist.utilities.speech.SpeechRecognitionHandler;
+import android.widget.Button;
 
 public class HelpActivity extends AppCompatActivity {
+
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,24 +20,34 @@ public class HelpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_help);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        context = this;
+
+        Button voiceCommandsBtn = (Button) findViewById(R.id.btn_voice_commands);
+        voiceCommandsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, HelpVoiceCommandsActivity.class);
+                context.startActivity(intent);
+            }
+        });
+
+        Button addProductBtn = (Button) findViewById(R.id.btn_add_product);
+        addProductBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, HelpAddProductActivity.class);
+                context.startActivity(intent);
+            }
+        });
+
+        Button manipulateProductBtn = (Button) findViewById(R.id.btn_manipulate_product);
+        manipulateProductBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, HelpManipulateProductActivity.class);
+                context.startActivity(intent);
+            }
+        });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_help_navigation, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        switch (id) {
-            case R.id.option_add_product:
-
-                return false;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 }

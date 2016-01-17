@@ -31,8 +31,20 @@
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".HelpVoiceCommandsActivity"
+            android:label="@string/title_activity_help_voice_commands"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".HelpAddProductActivity"
+            android:label="@string/title_activity_help_add_product"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".HelpActivity"
-            android:label="@string/app_name"
+            android:label="@string/title_activity_help"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".HelpManipulateProductActivity"
+            android:label="@string/title_activity_help_manipulate_product"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

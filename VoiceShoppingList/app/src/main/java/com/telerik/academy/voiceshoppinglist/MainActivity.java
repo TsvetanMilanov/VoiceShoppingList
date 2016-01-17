@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, HelpActivity.class);
 
                 MainActivity.this.startActivity(intent);
-                
+
                 if (isListening) {
                     SpeechRecognitionHandler.stopListening();
                     commandsResultTextView.setVisibility(View.INVISIBLE);

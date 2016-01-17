@@ -1,4 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -6,29 +8,35 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.telerik.academy.voiceshoppinglist.HelpActivityFragment"
-    tools:showIn="@layout/activity_help">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.telerik.academy.voiceshoppinglist.HelpVoiceCommandsActivity"
+    tools:showIn="@layout/activity_help_voice_commands">
 
-    <ImageView
-        android:id="@+id/iv_app_bar"
-        android:layout_width="match_parent"
+    <RelativeLayout
+        android:id="@+id/rl_container"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:src="@drawable/app_bar" />
+        android:layout_centerHorizontal="true">
 
-    <ImageView
-        android:id="@+id/iv_pointer"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="-20dp"
-        android:layout_marginTop="20dp"
-        android:alpha="0"
-        android:src="@drawable/pointer_png" />
+        <ImageView
+            android:id="@+id/iv_app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/app_bar" />
+
+        <ImageView
+            android:id="@+id/iv_pointer"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="20dp"
+            android:alpha="0"
+            android:src="@drawable/pointer_png" />
+    </RelativeLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/iv_pointer">
+        android:layout_below="@id/rl_container">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -90,5 +98,4 @@
                 android:text="@string/show_me_how_label" />
         </LinearLayout>
     </ScrollView>
-
 </RelativeLayout>

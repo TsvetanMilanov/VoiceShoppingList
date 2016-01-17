@@ -25,6 +25,11 @@
             android:propertyName="translationYBy"
             android:valueTo="5" />
     </set>
+    <objectAnimator
+        android:duration="@android:integer/config_mediumAnimTime"
+        android:propertyName="x"
+        android:valueFrom="120dp"
+        android:valueTo="0" />
     <set android:ordering="together">
         <objectAnimator
             android:duration="700"
@@ -47,4 +52,13 @@
         android:duration="@android:integer/config_shortAnimTime"
         android:propertyName="alpha"
         android:valueTo="0" />
+    <objectAnimator
+        android:duration="@android:integer/config_shortAnimTime"
+        android:propertyName="x"
+        android:valueTo="0" />
+    <objectAnimator
+        android:duration="@android:integer/config_mediumAnimTime"
+        android:propertyName="x"
+        android:valueFrom="0"
+        android:valueTo="120dp" />
 </set>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.telerik.academy.voiceshoppinglist.HelpAddProductActivity"
+    tools:showIn="@layout/activity_help_add_product">
+
+    <RelativeLayout
+        android:layout_centerHorizontal="true"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/rl_container">
+
+        <ImageView
+            android:id="@+id/iv_app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/app_bar" />
+
+        <ImageView
+            android:id="@+id/iv_pointer"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="20dp"
+            android:alpha="0"
+            android:src="@drawable/pointer_png" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rl_container">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/CommandsResultTextView"
+                android:text="@string/help_add_product_text" />
+
+            <Button
+                android:id="@+id/btn_show_me_how"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/show_me_how_label" />
+
+            <TextView
+                style="@style/CommandsResultTextView"
+                android:text="Then the product will be added to the shopping list and you can manipulate it." />
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>
