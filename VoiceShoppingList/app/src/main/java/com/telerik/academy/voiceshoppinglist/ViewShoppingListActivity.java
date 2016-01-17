@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -85,6 +86,9 @@ public class ViewShoppingListActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.option_add_product:
+                ShoppingListTouchCommands.addProduct(this, productNameInput, productsList, mainScrollView);
+                return true;
             case R.id.option_finish_shopping_list:
                 if (shoppingList != null) {
                     return true;

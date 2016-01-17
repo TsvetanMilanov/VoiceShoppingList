@@ -2,6 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/option_add_product"
+        android:icon="@android:drawable/ic_input_add"
+        android:title="@string/add_product_label"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/option_finish_shopping_list"
         android:icon="@android:drawable/ic_menu_save"
         android:title="@string/finish_shopping_list_label"
