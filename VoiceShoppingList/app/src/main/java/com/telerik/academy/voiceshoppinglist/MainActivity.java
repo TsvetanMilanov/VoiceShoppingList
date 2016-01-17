@@ -84,9 +84,9 @@ public class MainActivity extends AppCompatActivity {
                     public void execute(String result) {
                         progressDialog.dismiss();
                         if (result != null && result.length() > 0) {
-                            AlertDialogFactory.createInformationAlertDialog(MainActivity.this, "Backup successful.", "Success!").show();
+                            AlertDialogFactory.createInformationAlertDialog(MainActivity.this, "Backup successful.", "Success!", null).show();
                         } else {
-                            AlertDialogFactory.createInformationAlertDialog(MainActivity.this, "Backup not successful.", "Error!").show();
+                            AlertDialogFactory.createInformationAlertDialog(MainActivity.this, "Backup not successful.", "Error!", null).show();
                         }
                     }
                 });
@@ -107,9 +107,9 @@ public class MainActivity extends AppCompatActivity {
                     public void execute(Boolean result) {
                         progressDialog.dismiss();
                         if (result) {
-                            AlertDialogFactory.createInformationAlertDialog(MainActivity.this, "Restore successful.", "Success!").show();
+                            AlertDialogFactory.createInformationAlertDialog(MainActivity.this, "Restore successful.", "Success!", null).show();
                         } else {
-                            AlertDialogFactory.createInformationAlertDialog(MainActivity.this, "Restore not successful.", "Error!").show();
+                            AlertDialogFactory.createInformationAlertDialog(MainActivity.this, "Restore not successful.", "Error!", null).show();
                         }
                     }
                 });

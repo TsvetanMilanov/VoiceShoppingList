@@ -84,7 +84,7 @@ public class FinishShoppingListActivity extends AppCompatActivity {
                     public void execute() {
                         progressDialog.dismiss();
 
-                        AlertDialogFactory.createInformationAlertDialog(context, "Shopping list saved successfully.", null).show();
+                        AlertDialogFactory.createInformationAlertDialog(context, "Shopping list saved successfully.", null, null).show();
                     }
                 });
 

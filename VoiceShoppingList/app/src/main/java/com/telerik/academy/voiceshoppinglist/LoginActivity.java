@@ -16,6 +16,7 @@ import com.telerik.academy.voiceshoppinglist.remote.RequestConstants;
 import com.telerik.academy.voiceshoppinglist.remote.models.UserRequestModel;
 import com.telerik.academy.voiceshoppinglist.utilities.AlertDialogFactory;
 import com.telerik.academy.voiceshoppinglist.utilities.Constants;
+import com.telerik.academy.voiceshoppinglist.utilities.OkCommand;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -58,9 +59,16 @@ public class LoginActivity extends AppCompatActivity {
 
                             editor.commit();
 
-                            AlertDialogFactory.createInformationAlertDialog(LoginActivity.this, "Login successful.", "Success").show();
+                            AlertDialogFactory.createInformationAlertDialog(LoginActivity.this, "Login successful.", "Success", new OkCommand() {
+                                @Override
+                                public void execute() {
+                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                    LoginActivity.this.startActivity(intent);
+                                    LoginActivity.this.finish();
+                                }
+                            }).show();
                         } else {
-                            AlertDialogFactory.createInformationAlertDialog(LoginActivity.this, "Login failed.", "Error").show();
+                            AlertDialogFactory.createInformationAlertDialog(LoginActivity.this, "Login failed.", "Error", null).show();
                         }
                     }
                 });

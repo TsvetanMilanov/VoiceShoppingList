@@ -16,21 +16,18 @@
     <Button
         android:id="@+id/btn_voice_commands"
         style="@style/MainMenuButton"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/voice_commands_label" />
 
     <Button
         android:id="@+id/btn_add_product"
         style="@style/MainMenuButton"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/add_product_label" />
 
     <Button
         android:id="@+id/btn_manipulate_product"
         style="@style/MainMenuButton"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/manipulate_product_label" />
 
