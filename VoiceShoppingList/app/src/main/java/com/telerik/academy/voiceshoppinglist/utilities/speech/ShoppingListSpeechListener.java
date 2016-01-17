@@ -25,8 +25,8 @@ import java.util.ArrayList;
 
 public class ShoppingListSpeechListener extends BaseSpeechListener {
 
-    public ShoppingListSpeechListener(Activity activity, SpeechRecognizer speechRecognizer, Intent intent, Class intentClass, int resultTextViewId) {
-        super(activity, speechRecognizer, intent, intentClass, resultTextViewId);
+    public ShoppingListSpeechListener(Activity activity, SpeechRecognizer speechRecognizer, Intent intent, Class intentClass) {
+        super(activity, speechRecognizer, intent, intentClass);
         this.tag = ShoppingListSpeechListener.class.getSimpleName();
     }
 

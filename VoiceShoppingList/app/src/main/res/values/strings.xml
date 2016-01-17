@@ -25,4 +25,6 @@
     <string name="longitude_label">Longitude:</string>
     <string name="products_count_label">Products count:</string>
     <string name="add_product_label">Add product</string>
+    <string name="commands_result_text_view_tag">commands_result_tag</string>
+    <string name="mic_result_tag">mic_result_tag</string>
 </resources>

@@ -15,20 +15,18 @@ import com.telerik.academy.voiceshoppinglist.utilities.StringsSimilarityCalculat
 import java.util.ArrayList;
 
 public class MenuSpeechListener extends BaseSpeechListener {
-    public MenuSpeechListener(Activity activity, SpeechRecognizer speechRecognizer, Intent intent, Class intentClass, int resultTextViewId) {
-        super(activity, speechRecognizer, intent, intentClass, resultTextViewId);
+    public MenuSpeechListener(Activity activity, SpeechRecognizer speechRecognizer, Intent intent, Class intentClass) {
+        super(activity, speechRecognizer, intent, intentClass);
         this.tag = MenuSpeechListener.class.getSimpleName();
     }
 
     @Override
     protected boolean handleResults(ArrayList<String> data) {
-        TextView tvCommandResult = (TextView) this.activity.findViewById(this.resultTextViewId);
-
         for (String commandString : data) {
             if (StringsSimilarityCalculator.calculateSimilarityCoefficient(Constants.ADD_SHOPPING_LIST_COMMAND, commandString) >=
                     Constants.ACCEPTABLE_SIMILARITY_COEFFICIENT) {
                 MainMenuCommands.navigateToAddNewShoppingListActivity(this.activity);
-                tvCommandResult.setText(Constants.ADD_SHOPPING_LIST_COMMAND);
+                this.commandsResult.setText(Constants.ADD_SHOPPING_LIST_COMMAND);
                 return false;
             } else if (StringsSimilarityCalculator.calculateSimilarityCoefficient(Constants.STOP_LISTENING_COMMAND, commandString) >=
                     Constants.ACCEPTABLE_SIMILARITY_COEFFICIENT) {
@@ -36,12 +34,12 @@ public class MenuSpeechListener extends BaseSpeechListener {
                 // Need to set speechRecognizer to null because the destroy() method doesn't work here.
                 this.speechRecognizer = null;
                 SpeechRecognitionHandler.stopListening();
-                tvCommandResult.setText(Constants.STOP_LISTENING_COMMAND);
+                this.commandsResult.setText(Constants.STOP_LISTENING_COMMAND);
                 return false;
             } else if (StringsSimilarityCalculator.calculateSimilarityCoefficient(Constants.EXIT_APPLICATION_COMMAND, commandString) >=
                     Constants.ACCEPTABLE_SIMILARITY_COEFFICIENT) {
                 MainMenuCommands.exitApplication(this.activity);
-                tvCommandResult.setText(Constants.EXIT_APPLICATION_COMMAND);
+                this.commandsResult.setText(Constants.EXIT_APPLICATION_COMMAND);
                 return false;
             }
         }

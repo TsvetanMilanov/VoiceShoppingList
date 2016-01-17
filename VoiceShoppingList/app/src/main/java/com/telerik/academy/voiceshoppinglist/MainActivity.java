@@ -2,10 +2,12 @@ package com.telerik.academy.voiceshoppinglist;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.ContentFrameLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -20,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
+    private View micResultView;
     private TextView commandsResultTextView;
     private boolean isListening;
 
@@ -30,13 +33,12 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        ContentFrameLayout contentFrameLayout = (ContentFrameLayout) findViewById(android.R.id.content);
+
+        micResultView = contentFrameLayout.findViewWithTag(this.getResources().getString(R.string.mic_result_tag));
         commandsResultTextView = (TextView) findViewById(R.id.tv_command_result);
         commandsResultTextView.setVisibility(View.INVISIBLE);
         isListening = false;
-
-        VoiceShoppingListDbHelper db = new VoiceShoppingListDbHelper(this);
-
-        ArrayList<Product> products = db.getAllProducts();
 
         // testDatabase();
 
@@ -118,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     SpeechRecognitionHandler.stopListening();
                     commandsResultTextView.setVisibility(View.INVISIBLE);
+                    micResultView.setVisibility(View.INVISIBLE);
                     isListening = !isListening;
                 }
 

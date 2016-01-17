@@ -29,7 +29,7 @@ public final class SpeechRecognizerFactory {
      */
     public static SpeechRecognizer createMenuSpeechRecognizer(Activity activity, Intent intent, Class intentClass) {
         speechRecognizer = SpeechRecognizer.createSpeechRecognizer(activity);
-        MenuSpeechListener listener = new MenuSpeechListener(activity, speechRecognizer, intent, intentClass, R.id.tv_command_result);
+        MenuSpeechListener listener = new MenuSpeechListener(activity, speechRecognizer, intent, intentClass);
 
         speechRecognizer.setRecognitionListener(listener);
 
@@ -45,7 +45,7 @@ public final class SpeechRecognizerFactory {
      */
     public static SpeechRecognizer createShoppingListSpeechRecognizer(Activity activity, Intent intent, Class intentClass) {
         speechRecognizer = SpeechRecognizer.createSpeechRecognizer(activity);
-        ShoppingListSpeechListener listener = new ShoppingListSpeechListener(activity, speechRecognizer, intent, intentClass, R.id.tv_shopping_list_commands_result);
+        ShoppingListSpeechListener listener = new ShoppingListSpeechListener(activity, speechRecognizer, intent, intentClass);
 
         speechRecognizer.setRecognitionListener(listener);
 

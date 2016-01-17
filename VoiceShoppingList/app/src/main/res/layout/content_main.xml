@@ -5,9 +5,14 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
+    <View
+        style="@style/ViewMicResult"
+        android:tag="@string/mic_result_tag" />
+
     <TextView
         android:id="@+id/tv_command_result"
-        style="@style/CommandsResultTextView" />
+        style="@style/CommandsResultTextView"
+        android:tag="@string/commands_result_text_view_tag" />
 
     <fragment
         android:id="@+id/fragment"

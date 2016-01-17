@@ -2,16 +2,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/topLayout"
-    android:layout_below="@id/shopping_list_toolbar"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_below="@id/shopping_list_toolbar"
     android:orientation="vertical"
     tools:context=".ViewShoppingListActivity"
     tools:showIn="@layout/activity_view_shopping_list">
 
+    <View
+        style="@style/ViewMicResult"
+        android:tag="@string/mic_result_tag" />
+
     <TextView
         android:id="@+id/tv_shopping_list_commands_result"
-        style="@style/CommandsResultTextView" />
+        style="@style/CommandsResultTextView"
+        android:tag="@string/commands_result_text_view_tag" />
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"

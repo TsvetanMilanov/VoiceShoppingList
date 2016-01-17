@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.ContentFrameLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -36,6 +37,7 @@ public class ViewShoppingListActivity extends AppCompatActivity {
     private EditText productNameInput;
     private Activity context;
     private boolean isListening;
+    private View micResultView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,10 @@ public class ViewShoppingListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_shopping_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.shopping_list_toolbar);
         setSupportActionBar(toolbar);
+
+        ContentFrameLayout contentFrameLayout = (ContentFrameLayout) findViewById(android.R.id.content);
+
+        micResultView = contentFrameLayout.findViewWithTag(this.getResources().getString(R.string.mic_result_tag));
 
         commandsResultTextView = (TextView) findViewById(R.id.tv_shopping_list_commands_result);
         commandsResultTextView.setVisibility(View.INVISIBLE);
@@ -104,6 +110,7 @@ public class ViewShoppingListActivity extends AppCompatActivity {
                 } else {
                     SpeechRecognitionHandler.stopListening();
                     commandsResultTextView.setVisibility(View.INVISIBLE);
+                    micResultView.setVisibility(View.INVISIBLE);
                     isListening = !isListening;
                 }
 

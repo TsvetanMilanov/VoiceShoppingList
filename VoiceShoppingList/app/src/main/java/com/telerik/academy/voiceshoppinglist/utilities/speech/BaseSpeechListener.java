@@ -2,16 +2,18 @@ package com.telerik.academy.voiceshoppinglist.utilities.speech;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.speech.RecognitionListener;
 import android.speech.SpeechRecognizer;
+import android.support.v7.widget.ContentFrameLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.telerik.academy.voiceshoppinglist.R;
 import com.telerik.academy.voiceshoppinglist.utilities.AlertDialogFactory;
+import com.telerik.academy.voiceshoppinglist.utilities.RmsDBStateParams;
 
 import java.util.ArrayList;
 
@@ -22,26 +24,34 @@ public abstract class BaseSpeechListener implements RecognitionListener {
     protected SpeechRecognizer speechRecognizer;
     protected boolean isSpeechRecognizerAvailable;
     protected Class intentClass;
-    protected int resultTextViewId;
+    protected TextView commandsResult;
+    private final View micResultView;
+    protected RmsDBStateParams rmsDBStateParams;
 
-    public BaseSpeechListener(Activity activity, SpeechRecognizer speechRecognizer, Intent intent, Class intentClass, int resultTextViewId) {
+    public BaseSpeechListener(Activity activity, SpeechRecognizer speechRecognizer, Intent intent, Class intentClass) {
         this.activity = activity;
         this.intent = intent;
         this.speechRecognizer = speechRecognizer;
         this.isSpeechRecognizerAvailable = false;
         this.tag = BaseSpeechListener.class.getSimpleName();
         this.intentClass = intentClass;
-        this.resultTextViewId = resultTextViewId;
+
+        ContentFrameLayout layoutContent = (ContentFrameLayout) activity.findViewById(android.R.id.content);
+        Resources resources = activity.getResources();
+
+        this.commandsResult = (TextView) layoutContent.findViewWithTag(resources.getString(R.string.commands_result_text_view_tag));
+        this.micResultView = layoutContent.findViewWithTag(resources.getString(R.string.mic_result_tag));
+        this.rmsDBStateParams = new RmsDBStateParams(layoutContent, this.micResultView);
+        this.micResultView.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onReadyForSpeech(Bundle params) {
         Log.d(tag, "Ready for speech!");
 
-        TextView commandResultTextView = (TextView) this.activity.findViewById(this.resultTextViewId);
 
-        if (commandResultTextView != null) {
-            commandResultTextView.setText(R.string.waiting_for_command_label);
+        if (this.commandsResult != null) {
+            this.commandsResult.setText(R.string.waiting_for_command_label);
         }
     }
 
@@ -52,6 +62,14 @@ public abstract class BaseSpeechListener implements RecognitionListener {
 
     @Override
     public void onRmsChanged(float rmsdB) {
+        Log.e("RMS", "onRmsChanged: " + rmsdB);
+        if (this.micResultView != null) {
+            if (rmsdB < 0) {
+                rmsdB = 1;
+            }
+
+            this.micResultView.setLayoutParams(this.rmsDBStateParams.getLayoutParams(rmsdB));
+        }
     }
 
     @Override
@@ -63,10 +81,8 @@ public abstract class BaseSpeechListener implements RecognitionListener {
     public void onEndOfSpeech() {
         Log.e(tag, "onEndOfSpeech()");
 
-        TextView commandResultTextView = (TextView) this.activity.findViewById(this.resultTextViewId);
-
-        if (commandResultTextView != null) {
-            commandResultTextView.setText(R.string.please_wait_label);
+        if (this.commandsResult != null) {
+            this.commandsResult.setText(R.string.please_wait_label);
         }
 
         this.restartSpeechListener();
@@ -76,29 +92,31 @@ public abstract class BaseSpeechListener implements RecognitionListener {
     public void onError(int error) {
         Log.e(tag, "Error! " + error);
 
-        TextView commandResultTextView = (TextView) this.activity.findViewById(this.resultTextViewId);
-
         switch (error) {
             case SpeechRecognizer.ERROR_SERVER:
                 AlertDialogFactory.createInformationAlertDialog(this.activity, "There is something wrong with Google's server. Please try again later.", null).show();
-                commandResultTextView.setVisibility(View.INVISIBLE);
+                this.commandsResult.setVisibility(View.INVISIBLE);
+                this.micResultView.setVisibility(View.INVISIBLE);
                 return;
             case SpeechRecognizer.ERROR_CLIENT:
                 AlertDialogFactory.createInformationAlertDialog(this.activity, "There is something wrong with your device. Please try again later.", null).show();
-                commandResultTextView.setVisibility(View.INVISIBLE);
+                this.commandsResult.setVisibility(View.INVISIBLE);
+                this.micResultView.setVisibility(View.INVISIBLE);
                 return;
             case SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS:
                 AlertDialogFactory.createInformationAlertDialog(this.activity, "You should allow access to Microphone and Audio record on your device for this application to recognize your speech.", null).show();
-                commandResultTextView.setVisibility(View.INVISIBLE);
+                this.commandsResult.setVisibility(View.INVISIBLE);
+                this.micResultView.setVisibility(View.INVISIBLE);
                 return;
             case SpeechRecognizer.ERROR_NETWORK:
                 AlertDialogFactory.createInformationAlertDialog(this.activity, "There is no internet connection. Please try again later.", null).show();
-                commandResultTextView.setVisibility(View.INVISIBLE);
+                this.commandsResult.setVisibility(View.INVISIBLE);
+                this.micResultView.setVisibility(View.INVISIBLE);
                 return;
         }
 
-        if (commandResultTextView != null) {
-            commandResultTextView.setText(R.string.please_wait_label);
+        if (this.commandsResult != null) {
+            this.commandsResult.setText(R.string.please_wait_label);
         }
 
         if (error != SpeechRecognizer.ERROR_RECOGNIZER_BUSY) {
