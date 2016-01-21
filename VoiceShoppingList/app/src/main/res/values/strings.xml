@@ -44,4 +44,6 @@
     <string name="restore_label">Restore</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="delete_all_label">Delete all</string>
+    <string name="register_label">Register</string>
+    <string name="title_activity_register">RegisterActivity</string>
 </resources>

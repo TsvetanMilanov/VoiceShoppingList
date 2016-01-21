@@ -13,7 +13,7 @@ import android.widget.EditText;
 import com.telerik.academy.voiceshoppinglist.async.LoginAsyncTask;
 import com.telerik.academy.voiceshoppinglist.async.LoginCommand;
 import com.telerik.academy.voiceshoppinglist.remote.RequestConstants;
-import com.telerik.academy.voiceshoppinglist.remote.models.UserRequestModel;
+import com.telerik.academy.voiceshoppinglist.remote.models.UserLoginRequestModel;
 import com.telerik.academy.voiceshoppinglist.utilities.AlertDialogFactory;
 import com.telerik.academy.voiceshoppinglist.utilities.Constants;
 import com.telerik.academy.voiceshoppinglist.utilities.OkCommand;
@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                UserRequestModel user = new UserRequestModel();
+                UserLoginRequestModel user = new UserLoginRequestModel();
                 user.userName = ((EditText) LoginActivity.this.findViewById(R.id.et_username)).getText().toString();
                 user.password = ((EditText) LoginActivity.this.findViewById(R.id.et_password)).getText().toString();
 

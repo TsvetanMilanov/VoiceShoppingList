@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         Button addShoppingListBtn = (Button) findViewById(R.id.btn_add_new_shopping_list);
         Button myShoppingListsBtn = (Button) findViewById(R.id.btn_my_shopping_lists);
         Button loginBtn = (Button) findViewById(R.id.btn_login);
+        Button registerBtn = (Button) findViewById(R.id.btn_register);
         Button logoutBtn = (Button) findViewById(R.id.btn_logout);
         Button backupBtn = (Button) findViewById(R.id.btn_backup);
         final Button restoreBtn = (Button) findViewById(R.id.btn_restore);
@@ -65,11 +66,13 @@ public class MainActivity extends AppCompatActivity {
         String token = settings.getString(Constants.TOKEN_SHARED_PREFERENCE_KEY, null);
 
         if (token != null && token.length() > 0) {
+            registerBtn.setVisibility(View.GONE);
             loginBtn.setVisibility(View.GONE);
             logoutBtn.setVisibility(View.VISIBLE);
             backupBtn.setVisibility(View.VISIBLE);
             restoreBtn.setVisibility(View.VISIBLE);
         } else {
+            registerBtn.setVisibility(View.VISIBLE);
             loginBtn.setVisibility(View.VISIBLE);
             logoutBtn.setVisibility(View.GONE);
             backupBtn.setVisibility(View.GONE);
@@ -126,6 +129,22 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                MainActivity.this.startActivity(intent);
+                if (isListening) {
+                    SpeechRecognitionHandler.stopListening();
+                    commandsResultTextView.setVisibility(View.INVISIBLE);
+                    micResultView.setVisibility(View.INVISIBLE);
+                    isListening = !isListening;
+                }
+
+                MainActivity.this.finish();
+            }
+        });
+
+        registerBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
                 MainActivity.this.startActivity(intent);
                 if (isListening) {
                     SpeechRecognitionHandler.stopListening();

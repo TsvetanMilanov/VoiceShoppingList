@@ -6,6 +6,8 @@ import android.os.AsyncTask;
 import com.google.gson.Gson;
 import com.telerik.academy.voiceshoppinglist.remote.RequestConstants;
 import com.telerik.academy.voiceshoppinglist.remote.models.UserLoginRequestModel;
+import com.telerik.academy.voiceshoppinglist.remote.models.UserRegisterRequestModel;
+import com.telerik.academy.voiceshoppinglist.remote.models.UserRegisterResponseModel;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,27 +18,26 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 
-public class LoginAsyncTask extends AsyncTask<Void, Void, String> {
-    private LoginCommand loginCommand;
-    private Context context;
-    private URI uri;
-    private UserLoginRequestModel userLoginRequestModel;
+public class RegisterAsyncTask extends AsyncTask<Void, Void, UserRegisterResponseModel> {
 
-    public LoginAsyncTask(Context context, URI uri, UserLoginRequestModel userLoginRequestModel, LoginCommand loginCommand) {
-        this.loginCommand = loginCommand;
+    private RegisterCommand registerCommand;
+    private Context context;
+    private UserRegisterRequestModel userRegisterRequestModel;
+
+    public RegisterAsyncTask(Context context, UserRegisterRequestModel userRegisterRequestModel, RegisterCommand registerCommand) {
+        this.registerCommand = registerCommand;
         this.context = context;
-        this.uri = uri;
-        this.userLoginRequestModel = userLoginRequestModel;
+        this.userRegisterRequestModel = userRegisterRequestModel;
     }
 
     @Override
-    protected String doInBackground(Void... params) {
+    protected UserRegisterResponseModel doInBackground(Void... params) {
         Gson gson = new Gson();
-        String requestBody = gson.toJson(this.userLoginRequestModel);
+        String requestBody = gson.toJson(this.userRegisterRequestModel);
 
         URL url = null;
         try {
-            url = new URL(RequestConstants.BASE_URL + RequestConstants.LOGIN_ROUTE);
+            url = new URL(RequestConstants.BASE_URL + RequestConstants.REGISTER_ROUTE);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -47,7 +48,7 @@ public class LoginAsyncTask extends AsyncTask<Void, Void, String> {
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setConnectTimeout(100000);
             urlConnection.setReadTimeout(100000);
-            urlConnection.setRequestMethod("PUT");
+            urlConnection.setRequestMethod("POST");
             urlConnection.setDoOutput(true);
             urlConnection.setDoInput(true);
             urlConnection.setRequestProperty("Content-Type", "application/json");
@@ -65,7 +66,10 @@ public class LoginAsyncTask extends AsyncTask<Void, Void, String> {
                 sb.append(line + "\n");
             }
 
-            String result = sb.toString();
+            String resultString = sb.toString();
+
+            UserRegisterResponseModel result = gson.fromJson(resultString, UserRegisterResponseModel.class);
+
             return result;
         } catch (IOException e) {
             e.printStackTrace();
@@ -75,8 +79,8 @@ public class LoginAsyncTask extends AsyncTask<Void, Void, String> {
     }
 
     @Override
-    protected void onPostExecute(String s) {
-        this.loginCommand.execute(s);
-        super.onPostExecute(s);
+    protected void onPostExecute(UserRegisterResponseModel userRegisterResponseModel) {
+        this.registerCommand.execute(userRegisterResponseModel);
+        super.onPostExecute(userRegisterResponseModel);
     }
 }
