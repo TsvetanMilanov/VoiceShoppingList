@@ -43,6 +43,12 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <Button
+                android:id="@+id/btn_show_commands"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/show_all_commands" />
+
             <TextView
                 style="@style/CommandsResultTextView"
                 android:text="@string/help_start_listening_text" />

@@ -46,4 +46,6 @@
     <string name="delete_all_label">Delete all</string>
     <string name="register_label">Register</string>
     <string name="title_activity_register">RegisterActivity</string>
+    <string name="show_all_commands">Show all commands</string>
+    <string name="all_commands_list"><![CDATA[Shopping list commands: \n\nproduct [name] -> adds new product to the shopping list.\n\ncheck [number] -> marks the product with the number as checked. \n\nuncheck [number] -> marks the product with this number as unchecked. \n\ndelete [number] -> deletes the product with this number. \n\nfinish -> finishes the shopping list and navigates to save shopping list.]]></string>
 </resources>
